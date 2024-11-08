@@ -20,14 +20,18 @@ namespace QuanLyQuanPho
         private void đăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fAccountProfile fAccountProfile = new fAccountProfile();
-            this.Hide();
             fAccountProfile.ShowDialog();
-            this.Show();
         }
 
         private void đăngXuấtToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void adminToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fAdmin fAdmin = new fAdmin();
+            fAdmin.ShowDialog();
         }
     }
 }

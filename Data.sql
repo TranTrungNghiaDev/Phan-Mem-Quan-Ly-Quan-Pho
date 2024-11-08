@@ -75,3 +75,21 @@ CREATE TABLE BillInfo
 	FOREIGN KEY (FoodId) REFERENCES dbo.Food(Id)
 )
 GO
+
+INSERT INTO dbo.Account (UserName, UserPassword, DisplayName, AccountType)
+VALUES (N'TranNghia98',N'123456',N'Nghia', 1),
+(N'NguyenNgan',N'456789', N'Ngan', 0)
+GO
+
+CREATE PROC USP_GetAccountByUserName 
+@UserName NVARCHAR(100)
+AS
+BEGIN
+	SELECT *
+	FROM dbo.Account
+	WHERE UserName = @UserName
+END
+GO
+
+EXEC USP_GetAccountByUserName @UserName = 'TranNghia98'
+GO

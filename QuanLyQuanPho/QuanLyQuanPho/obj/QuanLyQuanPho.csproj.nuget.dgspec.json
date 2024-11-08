@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Hoc Tap\\Phan Mem Quan Ly Quan Pho\\QuanLyQuanPho\\QuanLyQuanPho\\QuanLyQuanPho.csproj": {}
+    "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\QuanLyQuanPho.csproj": {}
   },
   "projects": {
-    "D:\\Hoc Tap\\Phan Mem Quan Ly Quan Pho\\QuanLyQuanPho\\QuanLyQuanPho\\QuanLyQuanPho.csproj": {
+    "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\QuanLyQuanPho.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Hoc Tap\\Phan Mem Quan Ly Quan Pho\\QuanLyQuanPho\\QuanLyQuanPho\\QuanLyQuanPho.csproj",
+        "projectUniqueName": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\QuanLyQuanPho.csproj",
         "projectName": "QuanLyQuanPho",
-        "projectPath": "D:\\Hoc Tap\\Phan Mem Quan Ly Quan Pho\\QuanLyQuanPho\\QuanLyQuanPho\\QuanLyQuanPho.csproj",
+        "projectPath": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\QuanLyQuanPho.csproj",
         "packagesPath": "C:\\Users\\Nghia\\.nuget\\packages\\",
-        "outputPath": "D:\\Hoc Tap\\Phan Mem Quan Ly Quan Pho\\QuanLyQuanPho\\QuanLyQuanPho\\obj\\",
+        "outputPath": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Nghia\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -45,6 +45,12 @@
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.6, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
