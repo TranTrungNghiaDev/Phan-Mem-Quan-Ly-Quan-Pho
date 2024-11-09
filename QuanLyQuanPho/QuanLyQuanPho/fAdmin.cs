@@ -17,12 +17,5 @@ namespace QuanLyQuanPho
         {
             InitializeComponent();
         }
-
-        private void fAdmin_Load(object sender, EventArgs e)
-        {
-            string query = "EXEC USP_GetAccountByUserName @UserName";
-
-            dgvAccount.DataSource = DataProvider.Instance.ExcuteQuery(query, new object[] {"TranNghia98"});
-        }
     }
 }

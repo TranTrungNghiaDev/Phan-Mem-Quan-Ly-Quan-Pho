@@ -35,6 +35,10 @@
             đăngXuấtToolStripMenuItem1 = new ToolStripMenuItem();
             panel2 = new Panel();
             lsvBill = new ListView();
+            columnHeader1 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
+            columnHeader3 = new ColumnHeader();
+            columnHeader4 = new ColumnHeader();
             panel3 = new Panel();
             cbxSwitchTable = new ComboBox();
             btnSwitchTable = new Button();
@@ -47,6 +51,7 @@
             cbxFood = new ComboBox();
             cbxCategoryFood = new ComboBox();
             flpTable = new FlowLayoutPanel();
+            columnHeader5 = new ColumnHeader();
             menuStrip1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
@@ -102,11 +107,37 @@
             // 
             // lsvBill
             // 
+            lsvBill.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 });
+            lsvBill.GridLines = true;
             lsvBill.Location = new Point(3, 3);
             lsvBill.Name = "lsvBill";
             lsvBill.Size = new Size(371, 249);
             lsvBill.TabIndex = 0;
             lsvBill.UseCompatibleStateImageBehavior = false;
+            lsvBill.View = View.Details;
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "ID";
+            columnHeader1.Width = 40;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "Tên món ăn";
+            columnHeader2.TextAlign = HorizontalAlignment.Center;
+            columnHeader2.Width = 100;
+            // 
+            // columnHeader3
+            // 
+            columnHeader3.Text = "Giá";
+            columnHeader3.TextAlign = HorizontalAlignment.Center;
+            columnHeader3.Width = 80;
+            // 
+            // columnHeader4
+            // 
+            columnHeader4.Text = "Số lượng";
+            columnHeader4.TextAlign = HorizontalAlignment.Center;
+            columnHeader4.Width = 70;
             // 
             // panel3
             // 
@@ -210,10 +241,17 @@
             // 
             // flpTable
             // 
+            flpTable.AutoScroll = true;
             flpTable.Location = new Point(17, 34);
             flpTable.Name = "flpTable";
             flpTable.Size = new Size(388, 403);
             flpTable.TabIndex = 5;
+            // 
+            // columnHeader5
+            // 
+            columnHeader5.Text = "Tổng tiền";
+            columnHeader5.TextAlign = HorizontalAlignment.Center;
+            columnHeader5.Width = 80;
             // 
             // fTableManager
             // 
@@ -261,5 +299,10 @@
         private Button btnDiscount;
         private ComboBox cbxSwitchTable;
         private Button btnSwitchTable;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
+        private ColumnHeader columnHeader3;
+        private ColumnHeader columnHeader4;
+        private ColumnHeader columnHeader5;
     }
 }

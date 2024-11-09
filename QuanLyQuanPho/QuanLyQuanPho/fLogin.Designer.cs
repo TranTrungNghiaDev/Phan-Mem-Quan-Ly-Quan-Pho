@@ -88,6 +88,7 @@
             txbPassword.Name = "txbPassword";
             txbPassword.Size = new Size(302, 23);
             txbPassword.TabIndex = 1;
+            txbPassword.Text = "123456";
             txbPassword.UseSystemPasswordChar = true;
             // 
             // label2
@@ -115,6 +116,7 @@
             txbUserName.Name = "txbUserName";
             txbUserName.Size = new Size(305, 23);
             txbUserName.TabIndex = 1;
+            txbUserName.Text = "TranNghia98";
             // 
             // label1
             // 

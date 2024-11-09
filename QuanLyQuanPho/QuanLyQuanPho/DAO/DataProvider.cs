@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace QuanLyQuanPho.DAO
 {
-    internal class DataProvider
+    public class DataProvider
     {
         private static DataProvider instance;
 

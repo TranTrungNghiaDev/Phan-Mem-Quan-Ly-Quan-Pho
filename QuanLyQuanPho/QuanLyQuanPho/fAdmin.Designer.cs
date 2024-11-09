@@ -934,7 +934,6 @@
             Controls.Add(tabControl1);
             Name = "fAdmin";
             Text = "fAdmin";
-            Load += fAdmin_Load;
             tabControl1.ResumeLayout(false);
             tpBill.ResumeLayout(false);
             panel2.ResumeLayout(false);
