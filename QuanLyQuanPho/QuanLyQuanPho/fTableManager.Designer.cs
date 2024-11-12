@@ -35,11 +35,12 @@
             đăngXuấtToolStripMenuItem1 = new ToolStripMenuItem();
             panel2 = new Panel();
             lsvBill = new ListView();
-            columnHeader1 = new ColumnHeader();
             columnHeader2 = new ColumnHeader();
             columnHeader3 = new ColumnHeader();
             columnHeader4 = new ColumnHeader();
+            columnHeader5 = new ColumnHeader();
             panel3 = new Panel();
+            txbTotalPrice = new TextBox();
             cbxSwitchTable = new ComboBox();
             btnSwitchTable = new Button();
             nmDiscount = new NumericUpDown();
@@ -51,7 +52,6 @@
             cbxFood = new ComboBox();
             cbxCategoryFood = new ComboBox();
             flpTable = new FlowLayoutPanel();
-            columnHeader5 = new ColumnHeader();
             menuStrip1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
@@ -107,7 +107,7 @@
             // 
             // lsvBill
             // 
-            lsvBill.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 });
+            lsvBill.Columns.AddRange(new ColumnHeader[] { columnHeader2, columnHeader3, columnHeader4, columnHeader5 });
             lsvBill.GridLines = true;
             lsvBill.Location = new Point(3, 3);
             lsvBill.Name = "lsvBill";
@@ -116,16 +116,11 @@
             lsvBill.UseCompatibleStateImageBehavior = false;
             lsvBill.View = View.Details;
             // 
-            // columnHeader1
-            // 
-            columnHeader1.Text = "ID";
-            columnHeader1.Width = 40;
-            // 
             // columnHeader2
             // 
             columnHeader2.Text = "Tên món ăn";
             columnHeader2.TextAlign = HorizontalAlignment.Center;
-            columnHeader2.Width = 100;
+            columnHeader2.Width = 120;
             // 
             // columnHeader3
             // 
@@ -137,10 +132,17 @@
             // 
             columnHeader4.Text = "Số lượng";
             columnHeader4.TextAlign = HorizontalAlignment.Center;
-            columnHeader4.Width = 70;
+            columnHeader4.Width = 80;
+            // 
+            // columnHeader5
+            // 
+            columnHeader5.Text = "Tổng tiền";
+            columnHeader5.TextAlign = HorizontalAlignment.Center;
+            columnHeader5.Width = 80;
             // 
             // panel3
             // 
+            panel3.Controls.Add(txbTotalPrice);
             panel3.Controls.Add(cbxSwitchTable);
             panel3.Controls.Add(btnSwitchTable);
             panel3.Controls.Add(nmDiscount);
@@ -150,6 +152,17 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(374, 57);
             panel3.TabIndex = 3;
+            // 
+            // txbTotalPrice
+            // 
+            txbTotalPrice.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txbTotalPrice.Location = new Point(185, 29);
+            txbTotalPrice.Name = "txbTotalPrice";
+            txbTotalPrice.ReadOnly = true;
+            txbTotalPrice.Size = new Size(95, 26);
+            txbTotalPrice.TabIndex = 8;
+            txbTotalPrice.Text = "0";
+            txbTotalPrice.TextAlign = HorizontalAlignment.Center;
             // 
             // cbxSwitchTable
             // 
@@ -170,7 +183,7 @@
             // 
             // nmDiscount
             // 
-            nmDiscount.Location = new Point(144, 30);
+            nmDiscount.Location = new Point(94, 30);
             nmDiscount.Name = "nmDiscount";
             nmDiscount.Size = new Size(85, 23);
             nmDiscount.TabIndex = 5;
@@ -178,7 +191,7 @@
             // 
             // btnDiscount
             // 
-            btnDiscount.Location = new Point(144, 3);
+            btnDiscount.Location = new Point(94, 3);
             btnDiscount.Name = "btnDiscount";
             btnDiscount.Size = new Size(85, 25);
             btnDiscount.TabIndex = 4;
@@ -193,6 +206,7 @@
             btnCheckOut.TabIndex = 3;
             btnCheckOut.Text = "Thanh toán";
             btnCheckOut.UseVisualStyleBackColor = true;
+            btnCheckOut.Click += btnCheckOut_Click;
             // 
             // panel4
             // 
@@ -222,6 +236,7 @@
             btnAddFood.TabIndex = 2;
             btnAddFood.Text = "Thêm món";
             btnAddFood.UseVisualStyleBackColor = true;
+            btnAddFood.Click += btnAddFood_Click;
             // 
             // cbxFood
             // 
@@ -238,6 +253,7 @@
             cbxCategoryFood.Name = "cbxCategoryFood";
             cbxCategoryFood.Size = new Size(213, 23);
             cbxCategoryFood.TabIndex = 0;
+            cbxCategoryFood.SelectedIndexChanged += cbxCategoryFood_SelectedIndexChanged;
             // 
             // flpTable
             // 
@@ -246,12 +262,6 @@
             flpTable.Name = "flpTable";
             flpTable.Size = new Size(388, 403);
             flpTable.TabIndex = 5;
-            // 
-            // columnHeader5
-            // 
-            columnHeader5.Text = "Tổng tiền";
-            columnHeader5.TextAlign = HorizontalAlignment.Center;
-            columnHeader5.Width = 80;
             // 
             // fTableManager
             // 
@@ -271,6 +281,7 @@
             menuStrip1.PerformLayout();
             panel2.ResumeLayout(false);
             panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)nmDiscount).EndInit();
             panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)nmQuantityFood).EndInit();
@@ -299,10 +310,10 @@
         private Button btnDiscount;
         private ComboBox cbxSwitchTable;
         private Button btnSwitchTable;
-        private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
         private ColumnHeader columnHeader3;
         private ColumnHeader columnHeader4;
         private ColumnHeader columnHeader5;
+        private TextBox txbTotalPrice;
     }
 }

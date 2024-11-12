@@ -41,5 +41,24 @@ namespace QuanLyQuanPho.DAO
             }
             return -1;
         }
+
+        public void CreateBillByTableId(int tableId)
+        {
+            string query = @"EXEC USP_CreateUncheckBillByTableID @TableID ";
+            DataProvider.Instance.ExcuteNonQuery(query, new object[] {tableId});
+            
+        }
+
+        public int GetLastestBillId()
+        {
+            string query = @"EXEC USP_GetLastestBillId";
+            return (int)DataProvider.Instance.ExcuteScalar(query);
+        }
+
+        public void CheckOut(int uncheckBillID)
+        {
+            string query = @"EXEC USP_CheckOutBillByBillID @BillID ";
+            DataProvider.Instance.ExcuteNonQuery(query, new object[] {uncheckBillID});
+        }
     }
 }

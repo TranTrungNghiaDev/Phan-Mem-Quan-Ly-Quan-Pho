@@ -39,5 +39,11 @@ namespace QuanLyQuanPho.DAO
             }
             return listBillInfo;
         }
+    
+        public void CreateBillInfoByBillID(int billId, int foodId, int quantity)
+        {
+            string query = @"EXEC USP_CreateBillInfoByBillAndFoodId @billId , @TableID , @Quantity ";
+            DataProvider.Instance.ExcuteQuery(query, new object[] {billId, foodId, quantity});
+        }
     }
 }

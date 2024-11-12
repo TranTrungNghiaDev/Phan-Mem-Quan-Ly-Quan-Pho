@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,11 +20,14 @@ namespace QuanLyQuanPho
             InitializeComponent();
 
             LoadTable();
+            LoadListFoodCategory();
         }
 
         #region Methods
         void LoadTable()
         {
+            flpTable.Controls.Clear();
+
             List<FoodTable> foodTables = FoodTableDAO.Instance.GetFoodTableList();
             foreach (FoodTable table in foodTables)
             {
@@ -48,22 +52,43 @@ namespace QuanLyQuanPho
             }
         }
 
+        void LoadListFoodCategory()
+        {
+            List<FoodCategory> listFoodCategory = FoodCategoryDAO.Instance.GetListFoodCategory();
+            if (listFoodCategory.Count > 0)
+            {
+                cbxCategoryFood.DataSource = listFoodCategory;
+                cbxCategoryFood.DisplayMember = "Name";
+            }
+        }
+
+        void LoadListFoodByCategoryId(int categoryId)
+        {
+            List<Food> foodList = FoodDAO.Instance.GetListFoodByCategoryId(categoryId);
+            cbxFood.DataSource = foodList;
+            cbxFood.DisplayMember = "Name";
+        }
+
         private void ShowBill(int tableId)
         {
             lsvBill.Items.Clear();
 
             List<Menu> listMenu = MenuDAO.Instance.GetListMenuByTableId(tableId);
+            double totalPrice = 0;
             foreach (Menu menu in listMenu)
             {
-                ListViewItem item = new ListViewItem(menu.ID.ToString());
-                item.SubItems.Add(menu.FoodName);
+                ListViewItem item = new ListViewItem(menu.FoodName.ToString());
                 item.SubItems.Add(menu.Price.ToString());
                 item.SubItems.Add(menu.Quantity.ToString());
                 item.SubItems.Add(menu.TotalPrice.ToString());
 
+                totalPrice += menu.TotalPrice;
                 lsvBill.Items.Add(item);
             }
+            CultureInfo cultureInfo = new CultureInfo("vi-VN");
+            //Thread.CurrentThread.CurrentCulture = cultureInfo;
 
+            txbTotalPrice.Text = totalPrice.ToString("c", cultureInfo);
         }
         #endregion
 
@@ -71,6 +96,7 @@ namespace QuanLyQuanPho
         private void Button_Click(object? sender, EventArgs e)
         {
             int tableId = ((sender as Button).Tag as FoodTable).ID;
+            lsvBill.Tag = (sender as Button).Tag;
             ShowBill(tableId);
         }
 
@@ -91,5 +117,62 @@ namespace QuanLyQuanPho
             fAdmin.ShowDialog();
         }
         #endregion
+
+        private void cbxCategoryFood_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int id = 0;
+            ComboBox comboBox = sender as ComboBox;
+            if (comboBox.SelectedItem == null)
+            {
+                return;
+            }
+            else
+            {
+                FoodCategory foodCategory = comboBox.SelectedItem as FoodCategory;
+                id = foodCategory.ID;
+                LoadListFoodByCategoryId(id);
+            }
+        }
+
+        private void btnAddFood_Click(object sender, EventArgs e)
+        {
+            FoodTable foodTable = lsvBill.Tag as FoodTable;
+            Food food = cbxFood.SelectedItem as Food;
+
+            if (foodTable != null)
+            {
+                int tableId = foodTable.ID;
+                int billId = BillDAO.Instance.GetBillIdByTableId(tableId);
+                int quantity = (int)nmQuantityFood.Value;
+
+                if (billId == -1)
+                {
+                    BillDAO.Instance.CreateBillByTableId(tableId);
+                    billId = BillDAO.Instance.GetLastestBillId();
+                }
+
+                int foodId = food.ID;
+                BillInfoDAO.Instance.CreateBillInfoByBillID(billId, foodId, quantity);
+                ShowBill(tableId);
+                LoadTable();
+            }
+
+        }
+
+        private void btnCheckOut_Click(object sender, EventArgs e)
+        {
+            int tableID = (lsvBill.Tag as FoodTable).ID;
+            int uncheckBillID = BillDAO.Instance.GetBillIdByTableId(tableID);
+            if (uncheckBillID > 0)
+            {
+                DialogResult dialogResult = MessageBox.Show("Bạn có muốn thanh toán không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialogResult.Equals(DialogResult.Yes))
+                {
+                    BillDAO.Instance.CheckOut(uncheckBillID);
+                    ShowBill(tableID);
+                    LoadTable();
+                }
+            }
+        }
     }
 }
