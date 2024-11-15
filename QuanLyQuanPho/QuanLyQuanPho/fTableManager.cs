@@ -20,6 +20,7 @@ namespace QuanLyQuanPho
             InitializeComponent();
 
             LoadTable();
+            LoadSwitchTable();
             LoadListFoodCategory();
         }
 
@@ -75,6 +76,7 @@ namespace QuanLyQuanPho
 
             List<Menu> listMenu = MenuDAO.Instance.GetListMenuByTableId(tableId);
             double totalPrice = 0;
+            float discount = (float)nmDiscount.Value / 100;
             foreach (Menu menu in listMenu)
             {
                 ListViewItem item = new ListViewItem(menu.FoodName.ToString());
@@ -85,10 +87,17 @@ namespace QuanLyQuanPho
                 totalPrice += menu.TotalPrice;
                 lsvBill.Items.Add(item);
             }
+            totalPrice = totalPrice * (1 - discount);
             CultureInfo cultureInfo = new CultureInfo("vi-VN");
             //Thread.CurrentThread.CurrentCulture = cultureInfo;
 
             txbTotalPrice.Text = totalPrice.ToString("c", cultureInfo);
+        }
+
+        private void LoadSwitchTable()
+        {
+            cbxSwitchTable.DataSource = FoodTableDAO.Instance.GetFoodTableList();
+            cbxSwitchTable.DisplayMember = "Name";
         }
         #endregion
 
@@ -161,17 +170,48 @@ namespace QuanLyQuanPho
 
         private void btnCheckOut_Click(object sender, EventArgs e)
         {
-            int tableID = (lsvBill.Tag as FoodTable).ID;
+            FoodTable foodTable = (lsvBill.Tag as FoodTable);
+            int tableID = foodTable.ID;
             int uncheckBillID = BillDAO.Instance.GetBillIdByTableId(tableID);
+            int discount = (int)nmDiscount.Value;
+
             if (uncheckBillID > 0)
             {
-                DialogResult dialogResult = MessageBox.Show("Bạn có muốn thanh toán không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dialogResult = MessageBox.Show("Bạn có muốn thanh toán hóa đơn cho " + foodTable.Name + " không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dialogResult.Equals(DialogResult.Yes))
                 {
-                    BillDAO.Instance.CheckOut(uncheckBillID);
+                    BillDAO.Instance.CheckOut(uncheckBillID, discount);
                     ShowBill(tableID);
                     LoadTable();
                 }
+            }
+        }
+
+        private void nmDiscount_ValueChanged(object sender, EventArgs e)
+        {
+            FoodTable foodTable = lsvBill.Tag as FoodTable;
+            int discount = (int)nmDiscount.Value;
+            if (foodTable != null)
+            {
+                ShowBill(foodTable.ID);
+            }
+        }
+
+        private void btnSwitchTable_Click(object sender, EventArgs e)
+        {
+            FoodTable firstTable = lsvBill.Tag as FoodTable;
+            FoodTable secondTable = cbxSwitchTable.SelectedItem as FoodTable;
+         
+            DialogResult dialogResult = MessageBox.Show(
+                String.Format("Bạn có chắc muốn chuyển từ {0} sang {1} không ?", firstTable.Name, secondTable.Name),
+                "Thông Báo",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+            
+            if(dialogResult == DialogResult.Yes)
+            {
+                BillDAO.Instance.SwitchBillByTableID(firstTable.ID, secondTable.ID);
+                LoadTable();
             }
         }
     }

@@ -55,10 +55,16 @@ namespace QuanLyQuanPho.DAO
             return (int)DataProvider.Instance.ExcuteScalar(query);
         }
 
-        public void CheckOut(int uncheckBillID)
+        public void CheckOut(int uncheckBillID, int discount)
         {
-            string query = @"EXEC USP_CheckOutBillByBillID @BillID ";
-            DataProvider.Instance.ExcuteNonQuery(query, new object[] {uncheckBillID});
+            string query = @"EXEC USP_CheckOutBillByBillID @BillID , @Discount ";
+            DataProvider.Instance.ExcuteNonQuery(query, new object[] {uncheckBillID, discount});
+        }
+    
+        public void SwitchBillByTableID(int firstTableID , int secondTableID)
+        {  
+            string query = @"EXEC USP_SwitchBillByTableId @firstTableID , @secondTableID ";
+            DataProvider.Instance.ExcuteNonQuery(query, new object[] { firstTableID, secondTableID });
         }
     }
 }

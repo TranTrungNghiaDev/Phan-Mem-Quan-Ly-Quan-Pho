@@ -180,6 +180,7 @@
             btnSwitchTable.TabIndex = 6;
             btnSwitchTable.Text = "Chuyển bàn";
             btnSwitchTable.UseVisualStyleBackColor = true;
+            btnSwitchTable.Click += btnSwitchTable_Click;
             // 
             // nmDiscount
             // 
@@ -188,6 +189,7 @@
             nmDiscount.Size = new Size(85, 23);
             nmDiscount.TabIndex = 5;
             nmDiscount.TextAlign = HorizontalAlignment.Center;
+            nmDiscount.ValueChanged += nmDiscount_ValueChanged;
             // 
             // btnDiscount
             // 

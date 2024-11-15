@@ -108,7 +108,7 @@ GO
 EXEC USP_Login @UserName = 'TranNghia98', @Password = '123456'
 GO
 
-DECLARE @i INT = 0;
+DECLARE @i INT = 1;
 
 WHILE @i < 10
 BEGIN
@@ -206,7 +206,7 @@ CREATE PROC USP_GetMenuByTableID
 AS
 BEGIN
 SELECT f.FoodName, f.UnitPrice, bf.Quantity,
-	(f.UnitPrice * bf.Quantity) AS [Total Price]
+	(f.UnitPrice * bf.Quantity * (1 - b.Discount)) AS [Total Price]
 FROM dbo.Bill as b, dbo.BillInfo as bf, 
 	dbo.Food as f, dbo.FoodTable as ft
 WHERE b.Id = bf.BillId AND f.Id = bf.FoodId 
@@ -241,8 +241,8 @@ CREATE PROC USP_CreateUncheckBillByTableID
 	@TableID INT
 AS
 BEGIN
-	INSERT INTO dbo.Bill (FoodTableId)
-	VALUES(@TableID)
+	INSERT INTO dbo.Bill (FoodTableId, Discount)
+	VALUES(@TableID, 0)
 END
 GO
 
@@ -256,7 +256,7 @@ END
 GO
 
 -- Tạo ra Bill Info dựa theo Food ID
-ALTER PROC USP_CreateBillInfoByBillAndFoodId
+CREATE PROC USP_CreateBillInfoByBillAndFoodId
 	@BillId INT, 
 	@FoodID INT,
 	@Quantity INT
@@ -300,18 +300,18 @@ END
 GO
 
 -- Thanh toán hóa đơn dựa theo BillID
-CREATE PROC USP_CheckOutBillByBillID
-@BillID INT
+ALTER PROC USP_CheckOutBillByBillID
+@BillID INT,
+@Discount INT
 AS
 BEGIN
 	UPDATE dbo.Bill
-	SET BillStatus = 1
+	SET BillStatus = 1,
+	DateCheckOut = GETDATE(),
+	Discount = @Discount
 	WHERE Id = @BillID
 END
 GO
-
-DELETE Bill
-DELETE BillInfo
 
 -- Tạo Trigger cho Bill Info
 CREATE TRIGGER UTG_UpdateBillInfo
@@ -338,25 +338,82 @@ CREATE TRIGGER UTG_UpdateBill
 ON dbo.Bill FOR UPDATE
 AS
 BEGIN
-	DECLARE @BillID INT
-	SELECT @BillID = Id 
-	FROM inserted
+	UPDATE dbo.FoodTable
+	SET TableStatus = N'Có người'
+	WHERE Id IN (
+		SELECT FoodTableId
+		FROM dbo.Bill
+		WHERE BillStatus = 0
+	)
 
-	DECLARE @TableID INT
-	SELECT @TableID = FoodTableId
-	FROM dbo.Bill
-	WHERE Id = @BillID
-
-	DECLARE @COUNT INT = 0
-	SELECT @COUNT = COUNT(*)
-	FROM dbo.Bill
-	WHERE FoodTableId = @TableID AND BillStatus = 0
-
-	IF(@COUNT = 0)
-	BEGIN
-		UPDATE dbo.FoodTable
-		SET TableStatus = N'Trống'
-		WHERE Id = @TableID
-	END
+	UPDATE dbo.FoodTable
+	SET TableStatus = N'Trống'
+	WHERE Id NOT IN (
+		SELECT FoodTableId
+		FROM dbo.Bill
+		WHERE BillStatus = 0
+	)
 END
 GO
+
+-- Thêm cột discount vào bảng Bill
+ALTER TABLE dbo.Bill
+ADD Discount INT
+GO
+
+-- Đổi Bill Info giữa 2 bàn
+ALTER PROC USP_SwitchBillByTableId
+	@firstTableID INT,
+	@secondTableID INT
+AS
+BEGIN
+	-- Lấy ID bill của bàn đầu tiên
+	DECLARE @firstTableBill INT
+	BEGIN
+		SELECT @firstTableBill = Id
+		FROM dbo.Bill
+		WHERE FoodTableId = @firstTableID 
+			AND BillStatus = 0
+	END
+	-- Lấy ID bill của bàn thứ hai
+	DECLARE @secondTableBill INT
+	BEGIN
+		SELECT @secondTableBill = Id
+		FROM dbo.Bill
+		WHERE FoodTableId = @secondTableID 
+			AND BillStatus = 0
+	END
+
+	-- Hoán đổi hóa đơn giữa 2 bàn
+	-- TH1: Nếu 1 trong 2 hóa đơn bị NULL
+	IF(@firstTableBill IS NOT NULL AND @secondTableBill IS NULL)
+		BEGIN
+			UPDATE dbo.Bill
+			SET FoodTableId = @secondTableID
+			WHERE Id = @firstTableBill
+		END
+
+	ELSE IF(@secondTableBill IS NOT NULL AND @firstTableBill IS NULL)
+		BEGIN
+			UPDATE dbo.Bill
+			SET FoodTableId = @firstTableID
+			WHERE Id = @secondTableBill
+		END
+
+	ELSE IF(@firstTableBill IS NOT NULL AND @secondTableBill IS NOT NULL)
+		BEGIN
+			UPDATE dbo.Bill
+			SET FoodTableId = @secondTableID
+			WHERE Id = @firstTableBill
+
+			UPDATE dbo.Bill
+			SET FoodTableId = @firstTableID
+			WHERE Id = @secondTableBill
+		END
+END
+GO
+
+SELECT *
+FROM dbo.Bill
+WHERE BillStatus = 0
+

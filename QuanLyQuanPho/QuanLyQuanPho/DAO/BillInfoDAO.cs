@@ -45,5 +45,6 @@ namespace QuanLyQuanPho.DAO
             string query = @"EXEC USP_CreateBillInfoByBillAndFoodId @billId , @TableID , @Quantity ";
             DataProvider.Instance.ExcuteQuery(query, new object[] {billId, foodId, quantity});
         }
+    
     }
 }
