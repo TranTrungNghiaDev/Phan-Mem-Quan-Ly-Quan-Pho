@@ -55,10 +55,10 @@ namespace QuanLyQuanPho.DAO
             return (int)DataProvider.Instance.ExcuteScalar(query);
         }
 
-        public void CheckOut(int uncheckBillID, int discount)
+        public void CheckOut(int uncheckBillID, int discount, int totalPrice)
         {
-            string query = @"EXEC USP_CheckOutBillByBillID @BillID , @Discount ";
-            DataProvider.Instance.ExcuteNonQuery(query, new object[] {uncheckBillID, discount});
+            string query = @"EXEC USP_CheckOutBillByBillID @BillID , @Discount , @TotalPrice";
+            DataProvider.Instance.ExcuteNonQuery(query, new object[] {uncheckBillID, discount, totalPrice});
         }
     
         public void SwitchBillByTableID(int firstTableID , int secondTableID)
@@ -71,6 +71,12 @@ namespace QuanLyQuanPho.DAO
         {
             string query = @"EXEC USP_MergeBillByTableId @firstTableID , @secondTableID ";
             DataProvider.Instance.ExcuteNonQuery(query, new object[] { firstTableID, secondTableID });
+        }
+    
+        public DataTable GetCheckBillByDate(DateTime fromDate, DateTime endDate)
+        {
+            string query = @"EXEC USP_GetCheckBillByDate @fromDate , @endDate";
+            return DataProvider.Instance.ExcuteQuery(query, new object[] {fromDate, endDate});
         }
     }
 }

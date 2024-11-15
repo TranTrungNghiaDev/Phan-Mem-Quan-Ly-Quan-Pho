@@ -125,7 +125,7 @@ namespace QuanLyQuanPho
             fAdmin fAdmin = new fAdmin();
             fAdmin.ShowDialog();
         }
-        #endregion
+        
 
         private void cbxCategoryFood_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -174,13 +174,14 @@ namespace QuanLyQuanPho
             int tableID = foodTable.ID;
             int uncheckBillID = BillDAO.Instance.GetBillIdByTableId(tableID);
             int discount = (int)nmDiscount.Value;
+            int totalPrice = Int32.Parse(txbTotalPrice.Text.Split(" ")[0].Replace(".",""));
 
             if (uncheckBillID > 0)
             {
                 DialogResult dialogResult = MessageBox.Show("Bạn có muốn thanh toán hóa đơn cho " + foodTable.Name + " không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dialogResult.Equals(DialogResult.Yes))
                 {
-                    BillDAO.Instance.CheckOut(uncheckBillID, discount);
+                    BillDAO.Instance.CheckOut(uncheckBillID, discount, totalPrice);
                     ShowBill(tableID);
                     LoadTable();
                 }
@@ -212,6 +213,7 @@ namespace QuanLyQuanPho
             {
                 BillDAO.Instance.SwitchBillByTableID(firstTable.ID, secondTable.ID);
                 LoadTable();
+                ShowBill(firstTable.ID);
             }
         }
 
@@ -230,7 +232,9 @@ namespace QuanLyQuanPho
             {
                 BillDAO.Instance.MergeBillByTableID(firstTable.ID, secondTable.ID);
                 LoadTable();
+                ShowBill(firstTable.ID);
             }
         }
+        #endregion
     }
 }

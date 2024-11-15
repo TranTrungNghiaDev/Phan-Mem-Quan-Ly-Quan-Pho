@@ -16,6 +16,33 @@ namespace QuanLyQuanPho
         public fAdmin()
         {
             InitializeComponent();
+            LoadDateTimePickerForBill();
+            LoadCheckBillByDate();
         }
+
+        #region Methods
+        void LoadDateTimePickerForBill()
+        {
+            DateTime today = DateTime.Now;
+            dtpFromDate.Value = new DateTime(today.Year, today.Month, 1);
+            dtpEndDate.Value = dtpFromDate.Value.AddMonths(1).AddDays(-1);
+        }
+
+        void LoadCheckBillByDate()
+        {
+            DateTime fromDate = dtpFromDate.Value;
+            DateTime endDate = dtpEndDate.Value;
+            dgvBill.DataSource = BillDAO.Instance.GetCheckBillByDate(fromDate, endDate);
+        }
+        #endregion
+
+        #region Events
+        private void btnViewBill_Click(object sender, EventArgs e)
+        {
+            LoadCheckBillByDate();
+        }
+        #endregion
+
+
     }
 }

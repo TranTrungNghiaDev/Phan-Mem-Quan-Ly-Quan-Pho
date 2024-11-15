@@ -59,6 +59,7 @@ CREATE TABLE Bill
 	FoodTableId INT NOT NULL,
 	BillStatus INT NOT NULL DEFAULT 0, -- 1 là đã thanh toán , 0 là chưa thanh toán
 	Discount INT NOT NULL DEFAULT 0,
+	[Total Price] INT NOT NULL DEFAULT 0,
 
 	FOREIGN KEY (FoodTableId) REFERENCES dbo.FoodTable(Id)
 )
@@ -274,13 +275,15 @@ GO
 -- Thanh toán hóa đơn dựa theo BillID
 CREATE PROC USP_CheckOutBillByBillID
 @BillID INT,
-@Discount INT
+@Discount INT,
+@TotalPrice INT
 AS
 BEGIN
 	UPDATE dbo.Bill
 	SET BillStatus = 1,
 	DateCheckOut = GETDATE(),
-	Discount = @Discount
+	Discount = @Discount,
+	[Total Price] = @TotalPrice
 	WHERE Id = @BillID
 END
 GO
@@ -381,7 +384,7 @@ END
 GO
 
 -- Gộp Bill giữa 2 bàn
-ALTER PROC USP_MergeBillByTableId
+CREATE PROC USP_MergeBillByTableId
 	@firstTableID INT,
 	@secondTableID INT
 AS
@@ -434,9 +437,28 @@ BEGIN
 			)
 
 			UPDATE Bill
-			SET BillStatus = 1
+			SET BillStatus = 1, DateCheckOut = GETDATE()
 			WHERE Id = @secondTableBill
 		END
 	END
+GO
+
+-- Hiển thị danh sách Bill đã thanh toán
+ALTER PROC USP_GetCheckBillByDate
+@dateCheckIn DATE,
+@dateCheckOut DATE
+AS
+BEGIN
+	SELECT Id [Mã hóa đơn], 
+	DateCheckIn AS [Ngày vào], 
+	DateCheckOut AS [Ngày ra], 
+	FoodTableId AS [Mã bàn],
+	Discount AS [Giảm giá],
+	[Total Price] AS [Tổng tiền]
+	FROM dbo.Bill
+	WHERE BillStatus = 1
+	AND DateCheckIn >= @dateCheckIn
+	AND DateCheckOut <= @dateCheckOut
+END
 GO
 
