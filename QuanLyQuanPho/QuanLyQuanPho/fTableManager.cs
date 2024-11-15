@@ -201,16 +201,34 @@ namespace QuanLyQuanPho
         {
             FoodTable firstTable = lsvBill.Tag as FoodTable;
             FoodTable secondTable = cbxSwitchTable.SelectedItem as FoodTable;
-         
+
             DialogResult dialogResult = MessageBox.Show(
                 String.Format("Bạn có chắc muốn chuyển từ {0} sang {1} không ?", firstTable.Name, secondTable.Name),
                 "Thông Báo",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
-            
-            if(dialogResult == DialogResult.Yes)
+
+            if (dialogResult == DialogResult.Yes)
             {
                 BillDAO.Instance.SwitchBillByTableID(firstTable.ID, secondTable.ID);
+                LoadTable();
+            }
+        }
+
+        private void btnMergeTable_Click(object sender, EventArgs e)
+        {
+            FoodTable firstTable = lsvBill.Tag as FoodTable;
+            FoodTable secondTable = cbxSwitchTable.SelectedItem as FoodTable;
+
+            DialogResult dialogResult = MessageBox.Show(
+                String.Format("Bạn có chắc muốn gộp từ {0} sang {1} không ?", firstTable.Name, secondTable.Name),
+                "Thông Báo",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                BillDAO.Instance.MergeBillByTableID(firstTable.ID, secondTable.ID);
                 LoadTable();
             }
         }

@@ -66,5 +66,11 @@ namespace QuanLyQuanPho.DAO
             string query = @"EXEC USP_SwitchBillByTableId @firstTableID , @secondTableID ";
             DataProvider.Instance.ExcuteNonQuery(query, new object[] { firstTableID, secondTableID });
         }
+
+        public void MergeBillByTableID(int firstTableID, int secondTableID)
+        {
+            string query = @"EXEC USP_MergeBillByTableId @firstTableID , @secondTableID ";
+            DataProvider.Instance.ExcuteNonQuery(query, new object[] { firstTableID, secondTableID });
+        }
     }
 }

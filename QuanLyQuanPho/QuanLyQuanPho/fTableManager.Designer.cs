@@ -40,11 +40,12 @@
             columnHeader4 = new ColumnHeader();
             columnHeader5 = new ColumnHeader();
             panel3 = new Panel();
+            label1 = new Label();
             txbTotalPrice = new TextBox();
             cbxSwitchTable = new ComboBox();
             btnSwitchTable = new Button();
             nmDiscount = new NumericUpDown();
-            btnDiscount = new Button();
+            btnMergeTable = new Button();
             btnCheckOut = new Button();
             panel4 = new Panel();
             nmQuantityFood = new NumericUpDown();
@@ -142,24 +143,34 @@
             // 
             // panel3
             // 
+            panel3.Controls.Add(label1);
             panel3.Controls.Add(txbTotalPrice);
             panel3.Controls.Add(cbxSwitchTable);
             panel3.Controls.Add(btnSwitchTable);
             panel3.Controls.Add(nmDiscount);
-            panel3.Controls.Add(btnDiscount);
+            panel3.Controls.Add(btnMergeTable);
             panel3.Controls.Add(btnCheckOut);
             panel3.Location = new Point(411, 380);
             panel3.Name = "panel3";
             panel3.Size = new Size(374, 57);
             panel3.TabIndex = 3;
             // 
+            // label1
+            // 
+            label1.Location = new Point(195, 3);
+            label1.Name = "label1";
+            label1.Size = new Size(85, 24);
+            label1.TabIndex = 9;
+            label1.Text = "Giảm giá (%)";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // txbTotalPrice
             // 
             txbTotalPrice.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txbTotalPrice.Location = new Point(185, 29);
+            txbTotalPrice.Location = new Point(286, 27);
             txbTotalPrice.Name = "txbTotalPrice";
             txbTotalPrice.ReadOnly = true;
-            txbTotalPrice.Size = new Size(95, 26);
+            txbTotalPrice.Size = new Size(85, 26);
             txbTotalPrice.TabIndex = 8;
             txbTotalPrice.Text = "0";
             txbTotalPrice.TextAlign = HorizontalAlignment.Center;
@@ -169,12 +180,12 @@
             cbxSwitchTable.FormattingEnabled = true;
             cbxSwitchTable.Location = new Point(5, 31);
             cbxSwitchTable.Name = "cbxSwitchTable";
-            cbxSwitchTable.Size = new Size(83, 23);
+            cbxSwitchTable.Size = new Size(174, 23);
             cbxSwitchTable.TabIndex = 7;
             // 
             // btnSwitchTable
             // 
-            btnSwitchTable.Location = new Point(3, 3);
+            btnSwitchTable.Location = new Point(3, 2);
             btnSwitchTable.Name = "btnSwitchTable";
             btnSwitchTable.Size = new Size(85, 25);
             btnSwitchTable.TabIndex = 6;
@@ -184,27 +195,28 @@
             // 
             // nmDiscount
             // 
-            nmDiscount.Location = new Point(94, 30);
+            nmDiscount.Location = new Point(195, 30);
             nmDiscount.Name = "nmDiscount";
             nmDiscount.Size = new Size(85, 23);
             nmDiscount.TabIndex = 5;
             nmDiscount.TextAlign = HorizontalAlignment.Center;
             nmDiscount.ValueChanged += nmDiscount_ValueChanged;
             // 
-            // btnDiscount
+            // btnMergeTable
             // 
-            btnDiscount.Location = new Point(94, 3);
-            btnDiscount.Name = "btnDiscount";
-            btnDiscount.Size = new Size(85, 25);
-            btnDiscount.TabIndex = 4;
-            btnDiscount.Text = "Giảm giá";
-            btnDiscount.UseVisualStyleBackColor = true;
+            btnMergeTable.Location = new Point(94, 2);
+            btnMergeTable.Name = "btnMergeTable";
+            btnMergeTable.Size = new Size(85, 25);
+            btnMergeTable.TabIndex = 4;
+            btnMergeTable.Text = "Gộp bàn";
+            btnMergeTable.UseVisualStyleBackColor = true;
+            btnMergeTable.Click += btnMergeTable_Click;
             // 
             // btnCheckOut
             // 
-            btnCheckOut.Location = new Point(286, 3);
+            btnCheckOut.Location = new Point(286, 0);
             btnCheckOut.Name = "btnCheckOut";
-            btnCheckOut.Size = new Size(85, 52);
+            btnCheckOut.Size = new Size(85, 25);
             btnCheckOut.TabIndex = 3;
             btnCheckOut.Text = "Thanh toán";
             btnCheckOut.UseVisualStyleBackColor = true;
@@ -309,7 +321,7 @@
         private Button btnCheckOut;
         private FlowLayoutPanel flpTable;
         private NumericUpDown nmDiscount;
-        private Button btnDiscount;
+        private Button btnMergeTable;
         private ComboBox cbxSwitchTable;
         private Button btnSwitchTable;
         private ColumnHeader columnHeader2;
@@ -317,5 +329,6 @@
         private ColumnHeader columnHeader4;
         private ColumnHeader columnHeader5;
         private TextBox txbTotalPrice;
+        private Label label1;
     }
 }

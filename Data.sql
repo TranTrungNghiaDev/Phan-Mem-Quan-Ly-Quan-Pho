@@ -58,6 +58,7 @@ CREATE TABLE Bill
 	DateCheckOut DATE,
 	FoodTableId INT NOT NULL,
 	BillStatus INT NOT NULL DEFAULT 0, -- 1 là đã thanh toán , 0 là chưa thanh toán
+	Discount INT NOT NULL DEFAULT 0,
 
 	FOREIGN KEY (FoodTableId) REFERENCES dbo.FoodTable(Id)
 )
@@ -91,9 +92,6 @@ BEGIN
 END
 GO
 
-EXEC USP_GetAccountByUserName @UserName = 'TranNghia98'
-GO
-
 CREATE PROC USP_Login
 @UserName NVARCHAR(100),
 @Password NVARCHAR(100)
@@ -103,9 +101,6 @@ BEGIN
 	FROM dbo.Account
 	WHERE UserName = @UserName AND UserPassword = @Password
 END
-GO
-
-EXEC USP_Login @UserName = 'TranNghia98', @Password = '123456'
 GO
 
 DECLARE @i INT = 1;
@@ -124,11 +119,6 @@ BEGIN
 	SELECT * 
 	FROM dbo.FoodTable
 END
-GO
-
-UPDATE dbo.FoodTable
-SET TableStatus = N'Có người'
-WHERE Id = 7
 GO
 
 -- FoodTable
@@ -158,24 +148,6 @@ VALUES
 (N'Sữa đậu', 2, 7000),
 (N'Coca', 2, 10000),
 (N'Pepsi', 2, 10000)
-GO
-
--- Thêm Bill
-INSERT INTO dbo.Bill
-(DateCheckIn, DateCheckOut, FoodTableId, BillStatus)
-VALUES
-(GETDATE(), NULL, 1, 0),
-(GETDATE(), NULL, 2, 0),
-(GETDATE(), GETDATE(), 2, 1)
-GO
-
--- Thêm bill info
-INSERT INTO dbo.BillInfo
-(BillId, FoodId, Quantity)
-VALUES
-(1, 1, 1),
-(2, 3, 2),
-(3, 4, 3)
 GO
 
 -- Lấy hóa đơn chưa thanh toán theo Table ID
@@ -300,7 +272,7 @@ END
 GO
 
 -- Thanh toán hóa đơn dựa theo BillID
-ALTER PROC USP_CheckOutBillByBillID
+CREATE PROC USP_CheckOutBillByBillID
 @BillID INT,
 @Discount INT
 AS
@@ -356,13 +328,8 @@ BEGIN
 END
 GO
 
--- Thêm cột discount vào bảng Bill
-ALTER TABLE dbo.Bill
-ADD Discount INT
-GO
-
--- Đổi Bill Info giữa 2 bàn
-ALTER PROC USP_SwitchBillByTableId
+-- Đổi Bill giữa 2 bàn
+CREATE PROC USP_SwitchBillByTableId
 	@firstTableID INT,
 	@secondTableID INT
 AS
@@ -413,7 +380,63 @@ BEGIN
 END
 GO
 
-SELECT *
-FROM dbo.Bill
-WHERE BillStatus = 0
+-- Gộp Bill giữa 2 bàn
+ALTER PROC USP_MergeBillByTableId
+	@firstTableID INT,
+	@secondTableID INT
+AS
+BEGIN
+	-- Lấy ID bill của bàn đầu tiên
+	DECLARE @firstTableBill INT
+	BEGIN
+		SELECT @firstTableBill = Id
+		FROM dbo.Bill
+		WHERE FoodTableId = @firstTableID 
+			AND BillStatus = 0
+	END
+	-- Lấy ID bill của bàn thứ hai
+	DECLARE @secondTableBill INT
+	BEGIN
+		SELECT @secondTableBill = Id
+		FROM dbo.Bill
+		WHERE FoodTableId = @secondTableID 
+			AND BillStatus = 0
+	END
+
+	-- Hoán đổi hóa đơn giữa 2 bàn
+	-- TH1: Nếu 1 trong 2 hóa đơn bị NULL
+	IF(@firstTableBill IS NOT NULL AND @secondTableBill IS NULL)
+		BEGIN
+			UPDATE dbo.Bill
+			SET FoodTableId = @secondTableID
+			WHERE Id = @firstTableBill
+		END
+
+	ELSE IF(@secondTableBill IS NOT NULL AND @firstTableBill IS NULL)
+		BEGIN
+			UPDATE dbo.Bill
+			SET FoodTableId = @firstTableID
+			WHERE Id = @secondTableBill
+		END
+
+	-- TH2: Nếu cả 2 hóa đơn không bị NULL
+	ELSE IF(@secondTableBill IS NOT NULL AND @firstTableBill IS NOT NULL)
+		BEGIN
+		-- Lấy danh sách bill info ở hóa đơn của bàn thứ 2
+		-- Chuyển danh sách này sang bill bàn 1
+		-- Chuyển Bill bàn 2 thành đã thanh toán
+			UPDATE BillInfo
+			SET BillId = @firstTableBill
+			WHERE Id IN (		
+				SELECT Id
+				FROM dbo.BillInfo
+				WHERE BillId = @secondTableBill
+			)
+
+			UPDATE Bill
+			SET BillStatus = 1
+			WHERE Id = @secondTableBill
+		END
+	END
+GO
 

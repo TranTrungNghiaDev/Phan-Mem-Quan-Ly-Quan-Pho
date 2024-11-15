@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|d:\\hoc tap\\phan-mem-quan-ly-quan-pho\\quanlyquanpho\\quanlyquanpho\\ftablemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|solutionrelative:quanlyquanpho\\ftablemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|d:\\hoc tap\\phan-mem-quan-ly-quan-pho\\quanlyquanpho\\quanlyquanpho\\ftablemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\quanlyquanpho\\ftablemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|solutionrelative:quanlyquanpho\\ftablemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|d:\\hoc tap\\phan-mem-quan-ly-quan-pho\\quanlyquanpho\\quanlyquanpho\\dao\\billdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|solutionrelative:quanlyquanpho\\dao\\billdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|d:\\hoc tap\\phan-mem-quan-ly-quan-pho\\quanlyquanpho\\quanlyquanpho\\ftablemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|solutionrelative:quanlyquanpho\\ftablemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,37 +22,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "BillDAO.cs",
               "DocumentMoniker": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\DAO\\BillDAO.cs",
               "RelativeDocumentMoniker": "QuanLyQuanPho\\DAO\\BillDAO.cs",
               "ToolTip": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\DAO\\BillDAO.cs",
               "RelativeToolTip": "QuanLyQuanPho\\DAO\\BillDAO.cs",
-              "ViewState": "AgIAADIAAAAAAAAAAAAAAD8AAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAADMAAAAAAAAAAAAAAEUAAABLAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-15T02:35:46.764Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "fTableManager.cs",
               "DocumentMoniker": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\fTableManager.cs",
               "RelativeDocumentMoniker": "QuanLyQuanPho\\fTableManager.cs",
               "ToolTip": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\fTableManager.cs",
               "RelativeToolTip": "QuanLyQuanPho\\fTableManager.cs",
-              "ViewState": "AgIAAM8AAAAAAAAAAAAAANYAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAN4AAAAAAAAAAAAAAOIAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-15T02:23:26.54Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "fTableManager.cs [Design]",
               "DocumentMoniker": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\fTableManager.cs",
               "RelativeDocumentMoniker": "QuanLyQuanPho\\fTableManager.cs",
