@@ -1,4 +1,6 @@
 using QuanLyQuanPho.DAO;
+using QuanLyQuanPho.DTO;
+using System.Data;
 
 namespace QuanLyQuanPho
 {
@@ -29,7 +31,10 @@ namespace QuanLyQuanPho
 
             if(Login(userName, password))
             {
-                fTableManager fTableManager = new fTableManager();
+                DataTable accountData = AccountDAO.Instance.GetAccountByUserName(userName);
+                Account account = new Account(accountData.Rows[0]);
+
+                fTableManager fTableManager = new fTableManager(account);
                 this.Hide();
                 fTableManager.ShowDialog();
                 this.Show();

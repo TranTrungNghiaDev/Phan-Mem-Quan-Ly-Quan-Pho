@@ -15,13 +15,25 @@ namespace QuanLyQuanPho
 {
     public partial class fTableManager : Form
     {
-        public fTableManager()
+        Account account;
+
+        public Account Account
+        {
+            get => account;
+            set { 
+                account = value;
+                EnableAdminToolStripMenuByAccountType();
+            }
+        }
+
+        public fTableManager(Account account)
         {
             InitializeComponent();
 
             LoadTable();
             LoadSwitchTable();
             LoadListFoodCategory();
+            this.Account = account;
         }
 
         #region Methods
@@ -99,6 +111,18 @@ namespace QuanLyQuanPho
             cbxSwitchTable.DataSource = FoodTableDAO.Instance.GetFoodTableList();
             cbxSwitchTable.DisplayMember = "Name";
         }
+
+        private void EnableAdminToolStripMenuByAccountType()
+        {
+            if (Account.AccountType == 1)
+            {
+                adminToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                adminToolStripMenuItem.Enabled = false;
+            }
+        }
         #endregion
 
         #region Events
@@ -109,9 +133,9 @@ namespace QuanLyQuanPho
             ShowBill(tableId);
         }
 
-        private void đăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
+        private void thôngTinCáNhânToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            fAccountProfile fAccountProfile = new fAccountProfile();
+            fAccountProfile fAccountProfile = new fAccountProfile(this.Account);
             fAccountProfile.ShowDialog();
         }
 
@@ -125,7 +149,7 @@ namespace QuanLyQuanPho
             fAdmin fAdmin = new fAdmin();
             fAdmin.ShowDialog();
         }
-        
+
 
         private void cbxCategoryFood_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -174,7 +198,7 @@ namespace QuanLyQuanPho
             int tableID = foodTable.ID;
             int uncheckBillID = BillDAO.Instance.GetBillIdByTableId(tableID);
             int discount = (int)nmDiscount.Value;
-            int totalPrice = Int32.Parse(txbTotalPrice.Text.Split(" ")[0].Replace(".",""));
+            int totalPrice = Int32.Parse(txbTotalPrice.Text.Split(" ")[0].Replace(".", ""));
 
             if (uncheckBillID > 0)
             {

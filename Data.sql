@@ -444,7 +444,7 @@ BEGIN
 GO
 
 -- Hiển thị danh sách Bill đã thanh toán
-ALTER PROC USP_GetCheckBillByDate
+CREATE PROC USP_GetCheckBillByDate
 @dateCheckIn DATE,
 @dateCheckOut DATE
 AS
@@ -461,4 +461,39 @@ BEGIN
 	AND DateCheckOut <= @dateCheckOut
 END
 GO
+
+-- Cập nhật thông tin Account theo Username và Password
+CREATE PROC USP_UpdateAccountByUserNameAndPassword
+@UserName NVARCHAR(100),
+@DisplayName NVARCHAR(100),
+@Password NVARCHAR(100),
+@NewPassword NVARCHAR(100)
+AS
+BEGIN
+	DECLARE @isPasswordCorrect INT = 0;
+	-- Người dùng phải nhập đúng mật khẩu mới được đổi thông tin
+	SELECT @isPasswordCorrect = COUNT(*)
+	FROM dbo.Account
+	WHERE UserName = @UserName AND UserPassword = @Password
+	IF(@isPasswordCorrect = 1)
+		BEGIN
+			-- TH1: Người dùng muốn thay đổi DisplayName
+			IF(@NewPassword = '')
+				BEGIN
+					UPDATE Account
+					SET DisplayName = @DisplayName
+					WHERE UserName = @UserName
+				END
+			-- TH2: Người dùng muốn thay đổi Password
+			ELSE
+				BEGIN
+					UPDATE Account
+					SET DisplayName = @DisplayName, UserPassword = @NewPassword
+					WHERE UserName = @UserName
+				END
+		END
+END
+GO
+
+
 

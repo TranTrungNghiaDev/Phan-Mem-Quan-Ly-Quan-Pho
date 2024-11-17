@@ -70,20 +70,19 @@
             // 
             // btnExit
             // 
-            btnExit.Location = new Point(389, 364);
+            btnExit.Location = new Point(399, 355);
             btnExit.Name = "btnExit";
             btnExit.Size = new Size(75, 23);
-            btnExit.TabIndex = 5;
-            btnExit.Text = "Xóa";
+            btnExit.TabIndex = 2;
+            btnExit.Text = "Hủy";
             btnExit.UseVisualStyleBackColor = true;
-            btnExit.Click += btnExit_Click;
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(279, 364);
+            btnUpdate.Location = new Point(318, 355);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(75, 23);
-            btnUpdate.TabIndex = 4;
+            btnUpdate.TabIndex = 2;
             btnUpdate.Text = "Cập nhật";
             btnUpdate.UseVisualStyleBackColor = true;
             // 
@@ -102,6 +101,7 @@
             txbReNewPassword.Name = "txbReNewPassword";
             txbReNewPassword.Size = new Size(305, 23);
             txbReNewPassword.TabIndex = 1;
+            txbReNewPassword.UseSystemPasswordChar = true;
             // 
             // label5
             // 
@@ -128,6 +128,7 @@
             txbNewPassword.Name = "txbNewPassword";
             txbNewPassword.Size = new Size(305, 23);
             txbNewPassword.TabIndex = 1;
+            txbNewPassword.UseSystemPasswordChar = true;
             // 
             // label4
             // 
@@ -154,6 +155,7 @@
             txbPassword.Name = "txbPassword";
             txbPassword.Size = new Size(305, 23);
             txbPassword.TabIndex = 1;
+            txbPassword.UseSystemPasswordChar = true;
             // 
             // label3
             // 
@@ -207,6 +209,7 @@
             txbUserName.ReadOnly = true;
             txbUserName.Size = new Size(305, 23);
             txbUserName.TabIndex = 1;
+            txbUserName.TabStop = false;
             // 
             // label1
             // 
@@ -220,10 +223,8 @@
             // 
             // fAccountProfile
             // 
-            AcceptButton = btnUpdate;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            CancelButton = btnExit;
             ClientSize = new Size(507, 419);
             Controls.Add(panel1);
             Name = "fAccountProfile";
@@ -260,7 +261,7 @@
         private Panel panel3;
         private TextBox txbDisplayName;
         private Label label2;
-        private Button btnUpdate;
         private Button btnExit;
+        private Button btnUpdate;
     }
 }
