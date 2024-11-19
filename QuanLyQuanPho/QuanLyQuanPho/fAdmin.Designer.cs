@@ -288,6 +288,7 @@
             btnViewFood.TabIndex = 3;
             btnViewFood.Text = "Xem";
             btnViewFood.UseVisualStyleBackColor = true;
+            btnViewFood.Click += btnViewFood_Click;
             // 
             // btnEditFood
             // 
@@ -339,6 +340,7 @@
             // nudFoodPrice
             // 
             nudFoodPrice.Location = new Point(127, 8);
+            nudFoodPrice.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             nudFoodPrice.Name = "nudFoodPrice";
             nudFoodPrice.Size = new Size(232, 23);
             nudFoodPrice.TabIndex = 1;
@@ -422,6 +424,7 @@
             txbFoodId.ReadOnly = true;
             txbFoodId.Size = new Size(236, 23);
             txbFoodId.TabIndex = 1;
+            txbFoodId.TextChanged += txbFoodId_TextChanged;
             // 
             // label1
             // 

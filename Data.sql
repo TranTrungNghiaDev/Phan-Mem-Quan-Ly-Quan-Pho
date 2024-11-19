@@ -449,14 +449,13 @@ CREATE PROC USP_GetCheckBillByDate
 @dateCheckOut DATE
 AS
 BEGIN
-	SELECT Id [Mã hóa đơn], 
-	DateCheckIn AS [Ngày vào], 
-	DateCheckOut AS [Ngày ra], 
-	FoodTableId AS [Mã bàn],
-	Discount AS [Giảm giá],
-	[Total Price] AS [Tổng tiền]
-	FROM dbo.Bill
-	WHERE BillStatus = 1
+	SELECT ft.TableName [Tên bàn], 
+	b.DateCheckIn AS [Ngày vào], 
+	b.DateCheckOut AS [Ngày ra], 
+	b.Discount AS [Giảm giá],
+	b.[Total Price] AS [Tổng tiền]
+	FROM dbo.Bill as b, dbo.FoodTable as ft
+	WHERE BillStatus = 1 AND b.FoodTableId = ft. Id
 	AND DateCheckIn >= @dateCheckIn
 	AND DateCheckOut <= @dateCheckOut
 END
@@ -495,5 +494,14 @@ BEGIN
 END
 GO
 
+-- Lấy danh sách thức ăn
+CREATE PROC USP_GetFoodList
+AS
+BEGIN
+	SELECT f.FoodName, fc.CategoryName ,f.UnitPrice, f.Id
+	FROM dbo.Food as f, dbo.FoodCategory as fc
+	WHERE f.CategoryId = fc.Id
+END
+GO
 
 

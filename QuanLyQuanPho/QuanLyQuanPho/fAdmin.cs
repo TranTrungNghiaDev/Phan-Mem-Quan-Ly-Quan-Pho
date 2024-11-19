@@ -1,4 +1,5 @@
 ﻿using QuanLyQuanPho.DAO;
+using QuanLyQuanPho.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,14 +14,37 @@ namespace QuanLyQuanPho
 {
     public partial class fAdmin : Form
     {
+        BindingSource foodList = new BindingSource();
         public fAdmin()
         {
             InitializeComponent();
-            LoadDateTimePickerForBill();
-            LoadCheckBillByDate();
+            Load();
         }
 
         #region Methods
+        void Load()
+        {
+            LoadDateTimePickerForBill();
+            LoadCheckBillByDate();
+            LoadFoodCategory(cbxFoodCategory);
+            LoadFoodList();
+            AddFoodBinding();
+        }
+
+        void LoadFoodCategory(ComboBox cbx)
+        {
+            cbx.DataSource = FoodCategoryDAO.Instance.GetListFoodCategory();
+            cbx.DisplayMember = "name";
+        }
+
+        void AddFoodBinding()
+        {
+            txbFoodId.DataBindings.Add(new Binding("Text", dgvFood.DataSource, "Id"));
+            txbFoodName.DataBindings.Add(new Binding("Text", dgvFood.DataSource, "FoodName"));
+            nudFoodPrice.DataBindings.Add(new Binding("Value", dgvFood.DataSource, "UnitPrice"));
+
+        }
+
         void LoadDateTimePickerForBill()
         {
             DateTime today = DateTime.Now;
@@ -34,6 +58,31 @@ namespace QuanLyQuanPho
             DateTime endDate = dtpEndDate.Value;
             dgvBill.DataSource = BillDAO.Instance.GetCheckBillByDate(fromDate, endDate);
         }
+
+        void LoadFoodList()
+        {
+            foodList.DataSource = FoodDAO.Instance.GetListFood();
+            dgvFood.DataSource = foodList;
+        }
+
+        void ChangeFoodCategoryByFoodId()
+        {
+            if (dgvFood.SelectedCells.Count > 0)
+            {
+                string selectedCategoryName = dgvFood.SelectedCells[0].OwningRow.Cells["CategoryName"].Value.ToString();
+
+                foreach (FoodCategory foodCategory in cbxFoodCategory.Items)
+                {
+                    if (selectedCategoryName == foodCategory.Name)
+                    {
+                        cbxFoodCategory.SelectedItem = foodCategory;
+
+                    }
+                }
+
+            }
+
+        }
         #endregion
 
         #region Events
@@ -41,8 +90,18 @@ namespace QuanLyQuanPho
         {
             LoadCheckBillByDate();
         }
+
+        private void btnViewFood_Click(object sender, EventArgs e)
+        {
+            LoadFoodList();
+        }
         #endregion
 
 
+
+        private void txbFoodId_TextChanged(object sender, EventArgs e)
+        {
+            ChangeFoodCategoryByFoodId();
+        }
     }
 }

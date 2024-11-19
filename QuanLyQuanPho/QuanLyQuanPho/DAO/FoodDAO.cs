@@ -39,5 +39,11 @@ namespace QuanLyQuanPho.DAO
             }
             return listFood;
         }
+    
+        public DataTable GetListFood()
+        {
+            string query = @"USP_GetFoodList";
+            return DataProvider.Instance.ExcuteQuery(query);
+        }
     }
 }
