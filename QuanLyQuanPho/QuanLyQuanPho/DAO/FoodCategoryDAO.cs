@@ -40,5 +40,6 @@ namespace QuanLyQuanPho.DAO
             }
             return listFoodCategory;
         }
+    
     }
 }

@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace QuanLyQuanPho.DAO
 {
@@ -44,6 +45,26 @@ namespace QuanLyQuanPho.DAO
         {
             string query = @"USP_GetFoodList";
             return DataProvider.Instance.ExcuteQuery(query);
+        }
+    
+        public bool AddNewFoodToFoodList(string foodName, int categoryId, float price)
+        {
+            string query = @"EXEC USP_AddNewFoodToFoodList @FoodName , @CategoryID , @UnitPrice ";
+            int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { foodName, categoryId, price });
+            return result > 0;
+        }
+    
+        public bool UpdateFoodById(int id, string foodName, int categoryId, float price)
+        {
+            string query = @"EXEC USP_UpdateFoodByFoodId @FoodId , @FoodName , @CategoryID , @UnitPrice ";
+            int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { id, foodName, categoryId, price });
+            return result > 0;
+        }
+
+        public bool DeleteFoodById(int id) {
+            string query = @"EXEC USP_DeleteFoodById @FoodId ";
+            int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { id });
+            return result > 0;
         }
     }
 }

@@ -504,4 +504,48 @@ BEGIN
 END
 GO
 
+-- Thêm món ăn vào danh sách món ăn
+CREATE PROC USP_AddNewFoodToFoodList
+@FoodName NVARCHAR(100),
+@CategoryID INT,
+@UnitPrice FLOAT
+AS
+BEGIN
+	INSERT INTO dbo.Food (FoodName, CategoryId, UnitPrice)
+	VALUES (@FoodName, @CategoryID, @UnitPrice)
+END
+GO
 
+-- Sửa thông tin về món ăn theo ID
+CREATE PROC USP_UpdateFoodByFoodId
+@FoodId INT,
+@FoodName NVARCHAR(100),
+@CategoryID INT,
+@UnitPrice FLOAT
+AS
+BEGIN
+	UPDATE dbo.Food
+	SET FoodName = @FoodName, CategoryId = @CategoryID, UnitPrice = @UnitPrice
+	WHERE Id = @FoodId
+END
+GO
+
+-- Xóa thông tin về bill Info dựa theo Id món ăn
+CREATE PROC USP_DeleteBillInfoByFoodId
+@FoodId INT
+AS
+BEGIN
+	DELETE FROM dbo.BillInfo
+	WHERE FoodId = @FoodId
+END
+GO
+
+-- Xóa thông tin Food dựa theo Food ID
+CREATE PROC USP_DeleteFoodById
+@FoodId INT
+AS
+BEGIN
+	DELETE FROM dbo.Food
+	WHERE Id = @FoodId
+END
+GO

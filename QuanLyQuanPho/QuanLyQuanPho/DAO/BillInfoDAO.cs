@@ -39,12 +39,25 @@ namespace QuanLyQuanPho.DAO
             }
             return listBillInfo;
         }
-    
+
         public void CreateBillInfoByBillID(int billId, int foodId, int quantity)
         {
             string query = @"EXEC USP_CreateBillInfoByBillAndFoodId @billId , @TableID , @Quantity ";
-            DataProvider.Instance.ExcuteQuery(query, new object[] {billId, foodId, quantity});
+            DataProvider.Instance.ExcuteQuery(query, new object[] { billId, foodId, quantity });
         }
-    
+
+        public bool DeleteBillInfoByID(int billId)
+        {
+            if(BillInfoDAO.Instance.DeleteBillInfoByID(billId))
+            {
+                string query = @"EXEC USP_DeleteBillInfoByFoodId @FoodId ";
+                int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { billId });
+                return result > 0;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

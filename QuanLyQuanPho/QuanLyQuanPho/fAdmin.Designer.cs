@@ -298,6 +298,7 @@
             btnEditFood.TabIndex = 2;
             btnEditFood.Text = "Sửa";
             btnEditFood.UseVisualStyleBackColor = true;
+            btnEditFood.Click += btnEditFood_Click;
             // 
             // btnDeleteFood
             // 
@@ -307,6 +308,7 @@
             btnDeleteFood.TabIndex = 1;
             btnDeleteFood.Text = "Xóa";
             btnDeleteFood.UseVisualStyleBackColor = true;
+            btnDeleteFood.Click += btnDeleteFood_Click;
             // 
             // btnAddFood
             // 
@@ -316,6 +318,7 @@
             btnAddFood.TabIndex = 0;
             btnAddFood.Text = "Thêm";
             btnAddFood.UseVisualStyleBackColor = true;
+            btnAddFood.Click += btnAddFood_Click;
             // 
             // panel4
             // 

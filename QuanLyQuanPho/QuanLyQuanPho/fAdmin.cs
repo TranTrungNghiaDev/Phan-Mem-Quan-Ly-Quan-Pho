@@ -39,9 +39,9 @@ namespace QuanLyQuanPho
 
         void AddFoodBinding()
         {
-            txbFoodId.DataBindings.Add(new Binding("Text", dgvFood.DataSource, "Id"));
-            txbFoodName.DataBindings.Add(new Binding("Text", dgvFood.DataSource, "FoodName"));
-            nudFoodPrice.DataBindings.Add(new Binding("Value", dgvFood.DataSource, "UnitPrice"));
+            txbFoodId.DataBindings.Add(new Binding("Text", dgvFood.DataSource, "Id", true, DataSourceUpdateMode.Never));
+            txbFoodName.DataBindings.Add(new Binding("Text", dgvFood.DataSource, "FoodName", true, DataSourceUpdateMode.Never));
+            nudFoodPrice.DataBindings.Add(new Binding("Value", dgvFood.DataSource, "UnitPrice", true, DataSourceUpdateMode.Never));
 
         }
 
@@ -83,6 +83,53 @@ namespace QuanLyQuanPho
             }
 
         }
+
+        void AddNewFoodToFoodList()
+        {
+            string foodName = txbFoodName.Text;
+            int categoryId = (cbxFoodCategory.SelectedItem as FoodCategory).ID;
+            float price = (float)nudFoodPrice.Value;
+
+            if (FoodDAO.Instance.AddNewFoodToFoodList(foodName, categoryId, price))
+            {
+                MessageBox.Show("Thêm món ăn thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Thêm món ăn không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        void EditFoodById()
+        {
+            int id = Int32.Parse(txbFoodId.Text);
+            string foodName = txbFoodName.Text;
+            int categoryId = (cbxFoodCategory.SelectedItem as FoodCategory).ID;
+            float price = (float)nudFoodPrice.Value;
+
+            if (FoodDAO.Instance.UpdateFoodById(id, foodName, categoryId, price))
+            {
+                MessageBox.Show("Sửa thông tin thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            else
+            {
+                MessageBox.Show("Sửa không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void DeleteFoodById()
+        {
+            int foodId = Int32.Parse(txbFoodId.Text);
+            if(FoodDAO.Instance.DeleteFoodById(foodId))
+            {
+                MessageBox.Show("Xóa thông tin thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Xóa thông tin không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         #endregion
 
         #region Events
@@ -95,13 +142,43 @@ namespace QuanLyQuanPho
         {
             LoadFoodList();
         }
-        #endregion
-
-
-
+        
         private void txbFoodId_TextChanged(object sender, EventArgs e)
         {
             ChangeFoodCategoryByFoodId();
         }
+
+        private void btnAddFood_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn thêm món này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult.Equals(DialogResult.Yes))
+            {
+                AddNewFoodToFoodList();
+                LoadFoodList();
+            }
+
+        }
+
+        private void btnEditFood_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn sửa thông tin không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult.Equals(DialogResult.Yes))
+            {
+                EditFoodById();
+                LoadFoodList();
+            }
+        }
+
+        private void btnDeleteFood_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn xóa thông tin không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult.Equals(DialogResult.Yes))
+            {
+                DeleteFoodById();
+                LoadFoodList();
+            }
+        }
+
+        #endregion
     }
 }
