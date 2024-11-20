@@ -46,7 +46,6 @@ namespace QuanLyQuanPho.DAO
         {
             string query = @"EXEC USP_CreateUncheckBillByTableID @TableID ";
             DataProvider.Instance.ExcuteNonQuery(query, new object[] {tableId});
-            
         }
 
         public int GetLastestBillId()

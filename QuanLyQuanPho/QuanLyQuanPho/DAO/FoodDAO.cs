@@ -73,5 +73,11 @@ namespace QuanLyQuanPho.DAO
             }
 
         }
+    
+        public DataTable SearchFoodByName(string foodName)
+        {
+            string query = @"EXEC USP_SearchFoodByName @FoodName ";
+            return DataProvider.Instance.ExcuteQuery(query, new object[] { foodName });
+        }
     }
 }

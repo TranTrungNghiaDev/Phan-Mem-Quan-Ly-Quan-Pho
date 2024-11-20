@@ -268,6 +268,7 @@
             btnSearchFood.TabIndex = 4;
             btnSearchFood.Text = "Tìm";
             btnSearchFood.UseVisualStyleBackColor = true;
+            btnSearchFood.Click += btnSearchFood_Click;
             // 
             // panel5
             // 
