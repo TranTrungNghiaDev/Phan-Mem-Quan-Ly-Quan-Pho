@@ -93,6 +93,10 @@ namespace QuanLyQuanPho
             if (FoodDAO.Instance.AddNewFoodToFoodList(foodName, categoryId, price))
             {
                 MessageBox.Show("Thêm món ăn thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (insertFood != null)
+                {
+                    insertFood(this, new EventArgs());
+                }
             }
             else
             {
@@ -110,6 +114,10 @@ namespace QuanLyQuanPho
             if (FoodDAO.Instance.UpdateFoodById(id, foodName, categoryId, price))
             {
                 MessageBox.Show("Sửa thông tin thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if(updateFood != null)
+                {
+                    updateFood(this, new EventArgs());
+                }
             }
 
             else
@@ -124,6 +132,10 @@ namespace QuanLyQuanPho
             if(FoodDAO.Instance.DeleteFoodById(foodId))
             {
                 MessageBox.Show("Xóa thông tin thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if(deleteFood != null)
+                {
+                    deleteFood(this, new EventArgs());
+                }
             }
             else
             {
@@ -179,6 +191,26 @@ namespace QuanLyQuanPho
             }
         }
 
+        private event EventHandler insertFood;
+        public event EventHandler InsertFood
+        {
+            add { insertFood += value; }
+            remove { insertFood -= value; }
+        }
+
+        private event EventHandler updateFood;
+        public event EventHandler UpdateFood
+        {
+            add { updateFood += value; }
+            remove { updateFood -= value; }
+        }
+
+        private event EventHandler deleteFood;
+        public event EventHandler DeleteFood
+        {
+            add { deleteFood += value; }
+            remove { deleteFood -= value; }
+        }
         #endregion
     }
 }

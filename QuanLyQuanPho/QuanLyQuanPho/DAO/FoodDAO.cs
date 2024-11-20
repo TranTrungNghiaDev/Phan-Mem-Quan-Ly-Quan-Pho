@@ -62,9 +62,16 @@ namespace QuanLyQuanPho.DAO
         }
 
         public bool DeleteFoodById(int id) {
-            string query = @"EXEC USP_DeleteFoodById @FoodId ";
-            int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { id });
-            return result > 0;
+            if (BillInfoDAO.Instance.DeleteBillInfoByID(id)) {
+                string query = @"EXEC USP_DeleteFoodById @FoodId ";
+                int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { id });
+                return result > 0;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 }

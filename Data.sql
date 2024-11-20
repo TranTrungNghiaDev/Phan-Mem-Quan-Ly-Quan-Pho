@@ -308,6 +308,14 @@ BEGIN
 END
 GO
 
+CREATE TRIGGER UTG_DeleteBillInfo
+ON dbo.BillInfo FOR DELETE
+AS
+BEGIN
+	
+END
+GO
+
 -- Tạo Trigger cho Bill
 CREATE TRIGGER UTG_UpdateBill
 ON dbo.Bill FOR UPDATE
@@ -549,3 +557,6 @@ BEGIN
 	WHERE Id = @FoodId
 END
 GO
+
+EXEC USP_DELETEBillInfoByFoodId @FoodId = 19
+EXEC USP_DeleteFoodById @FoodId = 19

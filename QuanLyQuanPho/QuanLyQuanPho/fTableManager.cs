@@ -20,7 +20,8 @@ namespace QuanLyQuanPho
         public Account Account
         {
             get => account;
-            set { 
+            set
+            {
                 account = value;
                 EnableAdminToolStripMenuByAccountType();
             }
@@ -147,9 +148,35 @@ namespace QuanLyQuanPho
         private void adminToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fAdmin fAdmin = new fAdmin();
+            fAdmin.InsertFood += FAdmin_InsertFood;
+            fAdmin.UpdateFood += FAdmin_UpdateFood;
+            fAdmin.DeleteFood += FAdmin_DeleteFood;
             fAdmin.ShowDialog();
         }
 
+        private void FAdmin_DeleteFood(object? sender, EventArgs e)
+        {
+            LoadListFoodByCategoryId((cbxCategoryFood.SelectedItem as FoodCategory).ID);
+            if (lsvBill.Tag != null)
+            {
+                ShowBill((lsvBill.Tag as FoodTable).ID);
+            }
+            LoadTable();
+        }
+
+        private void FAdmin_UpdateFood(object? sender, EventArgs e)
+        {
+            LoadListFoodByCategoryId((cbxCategoryFood.SelectedItem as FoodCategory).ID);
+            if(lsvBill.Tag != null)
+            {
+                ShowBill((lsvBill.Tag as FoodTable).ID);
+            }
+        }
+
+        private void FAdmin_InsertFood(object? sender, EventArgs e)
+        {
+            LoadListFoodByCategoryId((cbxCategoryFood.SelectedItem as FoodCategory).ID);
+        }
 
         private void cbxCategoryFood_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -169,6 +196,12 @@ namespace QuanLyQuanPho
 
         private void btnAddFood_Click(object sender, EventArgs e)
         {
+            if(lsvBill.Tag == null)
+            {
+                MessageBox.Show("Vui lòng chọn bàn cần đặt món", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             FoodTable foodTable = lsvBill.Tag as FoodTable;
             Food food = cbxFood.SelectedItem as Food;
 
