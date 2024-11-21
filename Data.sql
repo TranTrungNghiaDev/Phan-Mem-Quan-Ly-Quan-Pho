@@ -627,4 +627,56 @@ BEGIN
 END
 GO
 
+-- Hiển thị danh sách tài khoản
+CREATE PROC GetAccountList
+AS
+BEGIN
+	SELECT UserName, DisplayName, AccountType
+	FROM dbo.Account
+END
+GO
+
+-- Thêm bàn
+CREATE PROC USP_AddNewFoodTable
+@TableName NVARCHAR(100)
+AS
+BEGIN
+	INSERT INTO dbo.FoodTable (TableName, TableStatus)
+	VALUES (@TableName, N'Trống')
+END
+GO
+
+-- Sửa thông tin bàn
+CREATE PROC USP_UpdateFoodTableById
+	@Id INT,
+	@TableName NVARCHAR(100)
+AS
+BEGIN
+	UPDATE dbo.FoodTable
+	SET TableName = @TableName
+	WHERE Id = @Id
+END
+GO
+
+-- Xóa bàn
+CREATE PROC USP_DeleteTableById
+@TableId INT
+AS
+BEGIN
+-- B1: Xóa BillInfo dựa theo Table ID
+	DELETE FROM dbo.BillInfo
+	WHERE BillId IN (
+		SELECT Id
+		FROM dbo.Bill
+		WHERE FoodTableId = @TableId AND BillStatus = 0
+	)
+	-- B2: Xóa Bill dựa theo Table ID
+	DELETE FROM dbo.Bill
+	WHERE FoodTableId = @TableId
+	-- B3: Xóa table dựa theo Table ID
+	DELETE FROM dbo.FoodTable
+	WHERE Id = @TableId
+END
+GO
+
 

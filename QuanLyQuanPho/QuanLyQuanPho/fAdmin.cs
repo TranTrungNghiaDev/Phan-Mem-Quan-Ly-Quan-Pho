@@ -16,6 +16,8 @@ namespace QuanLyQuanPho
     {
         BindingSource foodList = new BindingSource();
         BindingSource categoryList = new BindingSource();
+        BindingSource tableList = new BindingSource();
+        BindingSource accountList = new BindingSource();
         public fAdmin()
         {
             InitializeComponent();
@@ -31,6 +33,48 @@ namespace QuanLyQuanPho
             AddCategoryBinding();
             LoadFoodList();
             AddFoodBinding();
+            LoadTable();
+            AddTableBinding();
+            LoadAccountType();
+            LoadAccount();
+            AddAccountBinding();
+        }
+
+        void LoadAccountType()
+        {
+            List<Account> accountList = new List<Account>();
+            DataTable data = AccountDAO.Instance.GetAccountList();
+            foreach (DataRow row in data.Rows)
+            {
+                Account account = new Account(row);
+                accountList.Add(account);
+            }
+            cbxAccountType.DataSource = accountList;
+            cbxAccountType.DisplayMember = "AccountType";
+        }
+
+        void LoadTable()
+        {
+            tableList.DataSource = FoodTableDAO.Instance.GetTableList();
+            dgvFoodTable.DataSource = tableList;
+        }
+
+        void AddTableBinding()
+        {
+            txbFoodTableId.DataBindings.Add(new Binding("Text", dgvFoodTable.DataSource, "Id", true, DataSourceUpdateMode.Never));
+            txbFoodTableName.DataBindings.Add(new Binding("Text", dgvFoodTable.DataSource, "TableName", true, DataSourceUpdateMode.Never));
+        }
+
+        void LoadAccount()
+        {
+            accountList.DataSource = AccountDAO.Instance.GetAccountList();
+            dgvAccount.DataSource = accountList;
+        }
+
+        void AddAccountBinding()
+        {
+            txbUsserName.DataBindings.Add(new Binding("Text", dgvAccount.DataSource, "UserName", true, DataSourceUpdateMode.Never));
+            txbDisplayNameAccount.DataBindings.Add(new Binding("Text", dgvAccount.DataSource, "DisplayName", true, DataSourceUpdateMode.Never));
         }
 
         void LoadFoodCategory(ComboBox cbx)
@@ -200,7 +244,7 @@ namespace QuanLyQuanPho
                 MessageBox.Show("Thêm doanh mục không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        
+
         void DeleteCategory()
         {
             int categoryId = Int32.Parse(txbCategoryId.Text);
@@ -216,6 +260,66 @@ namespace QuanLyQuanPho
             else
             {
                 MessageBox.Show("Xóa doanh mục không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        void ChangeAccountStatusByUserName()
+        {
+            int accountType = (int)dgvAccount.SelectedCells[0].OwningRow.Cells["AccountType"].Value;
+            List<Account> accounts = cbxAccountType.DataSource as List<Account>;
+            foreach (Account account in accounts)
+            {
+                if (accountType == account.AccountType)
+                {
+                    cbxAccountType.SelectedItem = account;
+                }
+            }
+        }
+
+        void AddNewTableByName()
+        {
+            string tableName = txbFoodTableName.Text;
+            if (FoodTableDAO.Instance.AddNewTableByName(tableName))
+            {
+                MessageBox.Show("Thêm bàn mới thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadTable();
+            }
+            else
+            {
+                MessageBox.Show("Thêm bàn mới không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        void UpdateTableByName()
+        {
+            int tableId = Int32.Parse(txbFoodTableId.Text);
+            string tableName = txbFoodTableName.Text;
+            if (FoodTableDAO.Instance.UpdateFoodTableById(tableId, tableName))
+            {
+                MessageBox.Show("Sửa thông tin bàn thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadTable();
+            }
+            else
+            {
+                MessageBox.Show("Sửa thông tin bàn không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        void DeleteFoodTableById()
+        {
+            int tableId = Int32.Parse(txbFoodTableId.Text);
+            if (FoodTableDAO.Instance.DeleteFoodTableById(tableId))
+            {
+                MessageBox.Show("Xóa thông tin bàn thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadTable();
+                if(deleteTable != null)
+                {
+                    deleteTable(this, new EventArgs());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Xóa thông tin bàn không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         #endregion
@@ -279,7 +383,7 @@ namespace QuanLyQuanPho
 
         private void btnAddCategory_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thanh doanh mục này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm doanh mục này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialogResult.Equals(DialogResult.Yes))
             {
                 AddNewCategory();
@@ -289,7 +393,7 @@ namespace QuanLyQuanPho
 
         private void btnEditCategory_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thanh doanh mục này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn sửa doanh mục này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialogResult.Equals(DialogResult.Yes))
             {
                 EditCategory();
@@ -298,10 +402,64 @@ namespace QuanLyQuanPho
 
         private void btnDeleteCategory_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thanh doanh mục này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn xóa doanh mục này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialogResult.Equals(DialogResult.Yes))
             {
                 DeleteCategory();
+            }
+        }
+
+        private void txbUsserName_TextChanged(object sender, EventArgs e)
+        {
+            ChangeAccountStatusByUserName();
+        }
+
+        private void btnViewAccount_Click(object sender, EventArgs e)
+        {
+            LoadAccount();
+        }
+
+        private void btnViewFoodTable_Click(object sender, EventArgs e)
+        {
+            LoadTable();
+        }
+
+        private void btnAddFoodTable_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm bàn này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult.Equals(DialogResult.Yes))
+            {
+                AddNewTableByName();
+                if (addTable != null)
+                {
+                    addTable(this, new EventArgs());
+                }
+            }
+        }
+
+        private void btnEditFoodTable_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn sửa thông tin bàn này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult.Equals(DialogResult.Yes))
+            {
+                UpdateTableByName();
+                if (updateTable != null)
+                {
+                    updateTable(this, new EventArgs());
+                }
+            }
+        }
+
+        private void btnDeteleFoodTable_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn xóa thông tin bàn này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult.Equals(DialogResult.Yes))
+            {
+                DeleteFoodTableById();
+                if (deleteTable != null)
+                {
+                    deleteTable(this, new EventArgs());
+                }
             }
         }
 
@@ -343,8 +501,29 @@ namespace QuanLyQuanPho
         public event EventHandler xoaCategory;
         public event EventHandler XoaCategory
         {
-            add {  xoaCategory += value; }
+            add { xoaCategory += value; }
             remove { xoaCategory -= value; }
+        }
+
+        public event EventHandler addTable;
+        public event EventHandler AddTable
+        {
+            add { addTable += value; }
+            remove { addTable -= value; }
+        }
+
+        public event EventHandler updateTable;
+        public event EventHandler UpdateTable
+        {
+            add { updateTable += value; }
+            remove { updateTable -= value; }
+        }
+
+        public event EventHandler deleteTable;
+        public event EventHandler DeleteTable
+        {
+            add { deleteTable += value; }
+            remove { deleteTable -= value; }
         }
         #endregion
     }

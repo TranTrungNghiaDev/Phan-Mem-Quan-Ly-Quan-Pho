@@ -62,7 +62,6 @@
             dgvFood = new DataGridView();
             tpCategory = new TabPage();
             panel12 = new Panel();
-            btnCategoryView = new Button();
             btnEditCategory = new Button();
             btnDeleteCategory = new Button();
             btnAddCategory = new Button();
@@ -77,14 +76,10 @@
             dgvCategory = new DataGridView();
             tpFoodTable = new TabPage();
             panel11 = new Panel();
-            btnViewFoodTable = new Button();
             btnEditFoodTable = new Button();
             btnDeteleFoodTable = new Button();
             btnAddFoodTable = new Button();
             panel14 = new Panel();
-            panel21 = new Panel();
-            cbxFoodTableStatus = new ComboBox();
-            label9 = new Label();
             panel16 = new Panel();
             txbFoodTableName = new TextBox();
             label5 = new Label();
@@ -92,10 +87,9 @@
             txbFoodTableId = new TextBox();
             label7 = new Label();
             panel20 = new Panel();
-            dgwFoodTable = new DataGridView();
+            dgvFoodTable = new DataGridView();
             tpAccount = new TabPage();
             panel23 = new Panel();
-            btnViewAccount = new Button();
             btnEditAccount = new Button();
             btnDeleteAccount = new Button();
             btnAddAccount = new Button();
@@ -138,11 +132,10 @@
             tpFoodTable.SuspendLayout();
             panel11.SuspendLayout();
             panel14.SuspendLayout();
-            panel21.SuspendLayout();
             panel16.SuspendLayout();
             panel19.SuspendLayout();
             panel20.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgwFoodTable).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvFoodTable).BeginInit();
             tpAccount.SuspendLayout();
             panel23.SuspendLayout();
             panel24.SuspendLayout();
@@ -471,7 +464,6 @@
             // 
             // panel12
             // 
-            panel12.Controls.Add(btnCategoryView);
             panel12.Controls.Add(btnEditCategory);
             panel12.Controls.Add(btnDeleteCategory);
             panel12.Controls.Add(btnAddCategory);
@@ -479,16 +471,6 @@
             panel12.Name = "panel12";
             panel12.Size = new Size(382, 58);
             panel12.TabIndex = 4;
-            // 
-            // btnCategoryView
-            // 
-            btnCategoryView.Location = new Point(291, 3);
-            btnCategoryView.Name = "btnCategoryView";
-            btnCategoryView.Size = new Size(88, 52);
-            btnCategoryView.TabIndex = 3;
-            btnCategoryView.Text = "Xem";
-            btnCategoryView.UseVisualStyleBackColor = true;
-            btnCategoryView.Click += btnCategoryView_Click;
             // 
             // btnEditCategory
             // 
@@ -613,7 +595,6 @@
             // 
             // panel11
             // 
-            panel11.Controls.Add(btnViewFoodTable);
             panel11.Controls.Add(btnEditFoodTable);
             panel11.Controls.Add(btnDeteleFoodTable);
             panel11.Controls.Add(btnAddFoodTable);
@@ -621,15 +602,6 @@
             panel11.Name = "panel11";
             panel11.Size = new Size(382, 58);
             panel11.TabIndex = 7;
-            // 
-            // btnViewFoodTable
-            // 
-            btnViewFoodTable.Location = new Point(291, 3);
-            btnViewFoodTable.Name = "btnViewFoodTable";
-            btnViewFoodTable.Size = new Size(88, 52);
-            btnViewFoodTable.TabIndex = 3;
-            btnViewFoodTable.Text = "Xem";
-            btnViewFoodTable.UseVisualStyleBackColor = true;
             // 
             // btnEditFoodTable
             // 
@@ -639,6 +611,7 @@
             btnEditFoodTable.TabIndex = 2;
             btnEditFoodTable.Text = "Sửa";
             btnEditFoodTable.UseVisualStyleBackColor = true;
+            btnEditFoodTable.Click += btnEditFoodTable_Click;
             // 
             // btnDeteleFoodTable
             // 
@@ -648,6 +621,7 @@
             btnDeteleFoodTable.TabIndex = 1;
             btnDeteleFoodTable.Text = "Xóa";
             btnDeteleFoodTable.UseVisualStyleBackColor = true;
+            btnDeteleFoodTable.Click += btnDeteleFoodTable_Click;
             // 
             // btnAddFoodTable
             // 
@@ -657,43 +631,16 @@
             btnAddFoodTable.TabIndex = 0;
             btnAddFoodTable.Text = "Thêm";
             btnAddFoodTable.UseVisualStyleBackColor = true;
+            btnAddFoodTable.Click += btnAddFoodTable_Click;
             // 
             // panel14
             // 
-            panel14.Controls.Add(panel21);
             panel14.Controls.Add(panel16);
             panel14.Controls.Add(panel19);
             panel14.Location = new Point(394, 70);
             panel14.Name = "panel14";
             panel14.Size = new Size(368, 322);
             panel14.TabIndex = 8;
-            // 
-            // panel21
-            // 
-            panel21.Controls.Add(cbxFoodTableStatus);
-            panel21.Controls.Add(label9);
-            panel21.Location = new Point(3, 87);
-            panel21.Name = "panel21";
-            panel21.Size = new Size(362, 36);
-            panel21.TabIndex = 3;
-            // 
-            // cbxFoodTableStatus
-            // 
-            cbxFoodTableStatus.FormattingEnabled = true;
-            cbxFoodTableStatus.Location = new Point(117, 9);
-            cbxFoodTableStatus.Name = "cbxFoodTableStatus";
-            cbxFoodTableStatus.Size = new Size(242, 23);
-            cbxFoodTableStatus.TabIndex = 1;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(16, 11);
-            label9.Name = "label9";
-            label9.Size = new Size(95, 19);
-            label9.TabIndex = 0;
-            label9.Text = "Trạng thái :";
             // 
             // panel16
             // 
@@ -750,19 +697,19 @@
             // 
             // panel20
             // 
-            panel20.Controls.Add(dgwFoodTable);
+            panel20.Controls.Add(dgvFoodTable);
             panel20.Location = new Point(6, 70);
             panel20.Name = "panel20";
             panel20.Size = new Size(382, 322);
             panel20.TabIndex = 6;
             // 
-            // dgwFoodTable
+            // dgvFoodTable
             // 
-            dgwFoodTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgwFoodTable.Location = new Point(2, 1);
-            dgwFoodTable.Name = "dgwFoodTable";
-            dgwFoodTable.Size = new Size(377, 318);
-            dgwFoodTable.TabIndex = 0;
+            dgvFoodTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvFoodTable.Location = new Point(2, 1);
+            dgvFoodTable.Name = "dgvFoodTable";
+            dgvFoodTable.Size = new Size(377, 318);
+            dgvFoodTable.TabIndex = 0;
             // 
             // tpAccount
             // 
@@ -779,7 +726,6 @@
             // 
             // panel23
             // 
-            panel23.Controls.Add(btnViewAccount);
             panel23.Controls.Add(btnEditAccount);
             panel23.Controls.Add(btnDeleteAccount);
             panel23.Controls.Add(btnAddAccount);
@@ -787,15 +733,6 @@
             panel23.Name = "panel23";
             panel23.Size = new Size(382, 58);
             panel23.TabIndex = 4;
-            // 
-            // btnViewAccount
-            // 
-            btnViewAccount.Location = new Point(291, 3);
-            btnViewAccount.Name = "btnViewAccount";
-            btnViewAccount.Size = new Size(88, 52);
-            btnViewAccount.TabIndex = 3;
-            btnViewAccount.Text = "Xem";
-            btnViewAccount.UseVisualStyleBackColor = true;
             // 
             // btnEditAccount
             // 
@@ -913,6 +850,7 @@
             txbUsserName.ReadOnly = true;
             txbUsserName.Size = new Size(215, 23);
             txbUsserName.TabIndex = 1;
+            txbUsserName.TextChanged += txbUsserName_TextChanged;
             // 
             // label13
             // 
@@ -981,14 +919,12 @@
             tpFoodTable.ResumeLayout(false);
             panel11.ResumeLayout(false);
             panel14.ResumeLayout(false);
-            panel21.ResumeLayout(false);
-            panel21.PerformLayout();
             panel16.ResumeLayout(false);
             panel16.PerformLayout();
             panel19.ResumeLayout(false);
             panel19.PerformLayout();
             panel20.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgwFoodTable).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvFoodTable).EndInit();
             tpAccount.ResumeLayout(false);
             panel23.ResumeLayout(false);
             panel24.ResumeLayout(false);
@@ -1041,7 +977,6 @@
         private NumericUpDown nudFoodPrice;
         private ComboBox cbxFoodCategory;
         private Panel panel12;
-        private Button btnCategoryView;
         private Button btnEditCategory;
         private Button btnDeleteCategory;
         private Button btnAddCategory;
@@ -1055,13 +990,9 @@
         private Panel panel18;
         private DataGridView dgvCategory;
         private Panel panel11;
-        private Button btnViewFoodTable;
-        private Button btnEditFoodTable;
         private Button btnDeteleFoodTable;
         private Button btnAddFoodTable;
         private Panel panel14;
-        private Panel panel21;
-        private Label label9;
         private Panel panel16;
         private TextBox txbFoodTableName;
         private Label label5;
@@ -1069,10 +1000,8 @@
         private TextBox txbFoodTableId;
         private Label label7;
         private Panel panel20;
-        private DataGridView dgwFoodTable;
-        private ComboBox cbxFoodTableStatus;
+        private DataGridView dgvFoodTable;
         private Panel panel23;
-        private Button btnViewAccount;
         private Button btnEditAccount;
         private Button btnDeleteAccount;
         private Button btnAddAccount;
@@ -1094,5 +1023,6 @@
         private Button btnResetPassword;
         private TextBox txbDisplayNameAccount;
         private ComboBox cbxAccountType;
+        private Button btnEditFoodTable;
     }
 }

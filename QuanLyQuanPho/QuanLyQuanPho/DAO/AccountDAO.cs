@@ -49,5 +49,13 @@ namespace QuanLyQuanPho.DAO
             }
             return false;
         }
+    
+        public DataTable GetAccountList()
+        {
+            string query = @"EXEC GetAccountList";
+            return DataProvider.Instance.ExcuteQuery(query);
+        }
+
+
     }
 }
