@@ -548,6 +548,20 @@ BEGIN
 END
 GO
 
+-- Xóa thông tin Bill Info dựa theo CategoryId
+CREATE PROC USP_DeleteBillInfoByCategoryId
+	@CategoryId INT
+AS
+BEGIN
+	DELETE FROM dbo.BillInfo
+	WHERE BillId IN (
+		SELECT Id
+		FROM dbo.Food
+		WHERE CategoryId = @CategoryId
+	)
+END
+GO
+
 -- Xóa thông tin Food dựa theo Food ID
 CREATE PROC USP_DeleteFoodById
 @FoodId INT
@@ -558,8 +572,15 @@ BEGIN
 END
 GO
 
-EXEC USP_DELETEBillInfoByFoodId @FoodId = 19
-EXEC USP_DeleteFoodById @FoodId = 19
+-- Xóa thông tin food dựa theo CategoryId
+CREATE PROC USP_DeleteFoodByCategoryId
+	@CategoryId INT
+AS
+BEGIN
+	DELETE FROM dbo.Food
+	WHERE CategoryId = @CategoryId
+END
+GO
 
 -- Hàm chuyển chữ có dấu thành không dấu để phục vụ cho mục đích tìm kiếm
 CREATE FUNCTION [dbo].[fuConvertToUnsign1] ( @strInput NVARCHAR(4000) ) RETURNS NVARCHAR(4000) AS BEGIN IF @strInput IS NULL RETURN @strInput IF @strInput = '' RETURN @strInput DECLARE @RT NVARCHAR(4000) DECLARE @SIGN_CHARS NCHAR(136) DECLARE @UNSIGN_CHARS NCHAR (136) SET @SIGN_CHARS = N'ăâđêôơưàảãạáằẳẵặắầẩẫậấèẻẽẹéềểễệế ìỉĩịíòỏõọóồổỗộốờởỡợớùủũụúừửữựứỳỷỹỵý ĂÂĐÊÔƠƯÀẢÃẠÁẰẲẴẶẮẦẨẪẬẤÈẺẼẸÉỀỂỄỆẾÌỈĨỊÍ ÒỎÕỌÓỒỔỖỘỐỜỞỠỢỚÙỦŨỤÚỪỬỮỰỨỲỶỸỴÝ' +NCHAR(272)+ NCHAR(208) SET @UNSIGN_CHARS = N'aadeoouaaaaaaaaaaaaaaaeeeeeeeeee iiiiiooooooooooooooouuuuuuuuuuyyyyy AADEOOUAAAAAAAAAAAAAAAEEEEEEEEEEIIIII OOOOOOOOOOOOOOOUUUUUUUUUUYYYYYDD' DECLARE @COUNTER int DECLARE @COUNTER1 int SET @COUNTER = 1 WHILE (@COUNTER <=LEN(@strInput)) BEGIN SET @COUNTER1 = 1 WHILE (@COUNTER1 <=LEN(@SIGN_CHARS)+1) BEGIN IF UNICODE(SUBSTRING(@SIGN_CHARS, @COUNTER1,1)) = UNICODE(SUBSTRING(@strInput,@COUNTER ,1) ) BEGIN IF @COUNTER=1 SET @strInput = SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@strInput, @COUNTER+1,LEN(@strInput)-1) ELSE SET @strInput = SUBSTRING(@strInput, 1, @COUNTER-1) +SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@strInput, @COUNTER+1,LEN(@strInput)- @COUNTER) BREAK END SET @COUNTER1 = @COUNTER1 +1 END SET @COUNTER = @COUNTER +1 END SET @strInput = replace(@strInput,' ','-') RETURN @strInput END GO
@@ -574,4 +595,36 @@ BEGIN
 END
 GO
 
-EXEC USP_SearchFoodByName @FoodName = 'b'
+-- Thêm dữ liệu vào FoodCategory
+CREATE PROC USP_AddNewFoodCategory
+	@CategoryName NVARCHAR(100)
+AS
+BEGIN
+	INSERT INTO dbo.FoodCategory (CategoryName)
+	VALUES (@CategoryName)
+END
+GO
+
+-- Sửa dữ liệu của FoodCategory
+CREATE PROC USP_EditFoodCategory
+@Id INT,
+@CategoryName NVARCHAR(100)
+AS
+BEGIN
+	UPDATE dbo.FoodCategory
+	SET CategoryName = @CategoryName
+	WHERE Id = @Id
+END
+GO
+
+-- Xóa dữ liệu của FoodCategory
+CREATE PROC USP_DeleteFoodCategoryById
+	@Id INT
+AS
+BEGIN
+	DELETE FROM dbo.FoodCategory
+	WHERE Id = @Id
+END
+GO
+
+

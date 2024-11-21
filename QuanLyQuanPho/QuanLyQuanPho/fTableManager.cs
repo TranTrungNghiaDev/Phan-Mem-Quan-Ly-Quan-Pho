@@ -151,7 +151,31 @@ namespace QuanLyQuanPho
             fAdmin.InsertFood += FAdmin_InsertFood;
             fAdmin.UpdateFood += FAdmin_UpdateFood;
             fAdmin.DeleteFood += FAdmin_DeleteFood;
+            fAdmin.AddCategory += FAdmin_AddCategory;
+            fAdmin.UpdateCategory += FAdmin_UpdateCategory;
+            fAdmin.XoaCategory += FAdmin_XoaCategory;
             fAdmin.ShowDialog();
+        }
+
+        private void FAdmin_XoaCategory(object? sender, EventArgs e)
+        {
+            LoadListFoodCategory();
+            LoadListFoodByCategoryId((cbxCategoryFood.SelectedItem as FoodCategory).ID);
+            if (lsvBill.Tag != null)
+            {
+                ShowBill((lsvBill.Tag as FoodTable).ID);
+            }
+        }
+
+        private void FAdmin_UpdateCategory(object? sender, EventArgs e)
+        {
+            LoadListFoodCategory();
+            LoadListFoodByCategoryId((cbxCategoryFood.SelectedItem as FoodCategory).ID);
+        }
+
+        private void FAdmin_AddCategory(object? sender, EventArgs e)
+        {
+            LoadListFoodCategory();
         }
 
         private void FAdmin_DeleteFood(object? sender, EventArgs e)

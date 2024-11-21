@@ -52,5 +52,11 @@ namespace QuanLyQuanPho.DAO
             int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { billId });
             return result > 0;
         }
+    
+        public void DeleteBillInfoByCategoryId(int categoryId)
+        {
+            string query = @"EXEC USP_DeleteBillInfoByCategoryId @CategoryId ";
+            int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { categoryId });
+        }
     }
 }

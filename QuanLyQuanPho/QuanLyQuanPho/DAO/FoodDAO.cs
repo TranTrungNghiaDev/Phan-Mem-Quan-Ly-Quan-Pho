@@ -40,20 +40,20 @@ namespace QuanLyQuanPho.DAO
             }
             return listFood;
         }
-    
+
         public DataTable GetListFood()
         {
             string query = @"USP_GetFoodList";
             return DataProvider.Instance.ExcuteQuery(query);
         }
-    
+
         public bool AddNewFoodToFoodList(string foodName, int categoryId, float price)
         {
             string query = @"EXEC USP_AddNewFoodToFoodList @FoodName , @CategoryID , @UnitPrice ";
             int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { foodName, categoryId, price });
             return result > 0;
         }
-    
+
         public bool UpdateFoodById(int id, string foodName, int categoryId, float price)
         {
             string query = @"EXEC USP_UpdateFoodByFoodId @FoodId , @FoodName , @CategoryID , @UnitPrice ";
@@ -61,8 +61,10 @@ namespace QuanLyQuanPho.DAO
             return result > 0;
         }
 
-        public bool DeleteFoodById(int id) {
-            if (BillInfoDAO.Instance.DeleteBillInfoByID(id)) {
+        public bool DeleteFoodById(int id)
+        {
+            if (BillInfoDAO.Instance.DeleteBillInfoByID(id))
+            {
                 string query = @"EXEC USP_DeleteFoodById @FoodId ";
                 int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { id });
                 return result > 0;
@@ -73,7 +75,15 @@ namespace QuanLyQuanPho.DAO
             }
 
         }
-    
+
+        public bool DeleteFoodByCategoryId(int categoryId)
+        {
+            BillInfoDAO.Instance.DeleteBillInfoByCategoryId(categoryId);
+            string query = @"EXEC USP_DeleteFoodByCategoryId @CategoryId ";
+            int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { categoryId });
+            return result > 0;
+        }
+
         public DataTable SearchFoodByName(string foodName)
         {
             string query = @"EXEC USP_SearchFoodByName @FoodName ";

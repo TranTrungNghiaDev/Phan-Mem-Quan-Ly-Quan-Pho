@@ -15,6 +15,7 @@ namespace QuanLyQuanPho
     public partial class fAdmin : Form
     {
         BindingSource foodList = new BindingSource();
+        BindingSource categoryList = new BindingSource();
         public fAdmin()
         {
             InitializeComponent();
@@ -27,14 +28,24 @@ namespace QuanLyQuanPho
             LoadDateTimePickerForBill();
             LoadCheckBillByDate();
             LoadFoodCategory(cbxFoodCategory);
+            AddCategoryBinding();
             LoadFoodList();
             AddFoodBinding();
         }
 
         void LoadFoodCategory(ComboBox cbx)
         {
+            categoryList.DataSource = FoodCategoryDAO.Instance.GetFoodCategory();
+            dgvCategory.DataSource = categoryList;
+
             cbx.DataSource = FoodCategoryDAO.Instance.GetListFoodCategory();
             cbx.DisplayMember = "name";
+        }
+
+        void AddCategoryBinding()
+        {
+            txbCategoryId.DataBindings.Add(new Binding("Text", dgvCategory.DataSource, "Id", true, DataSourceUpdateMode.Never));
+            txbCategoryName.DataBindings.Add(new Binding("Text", dgvCategory.DataSource, "CategoryName", true, DataSourceUpdateMode.Never));
         }
 
         void AddFoodBinding()
@@ -42,7 +53,6 @@ namespace QuanLyQuanPho
             txbFoodId.DataBindings.Add(new Binding("Text", dgvFood.DataSource, "Id", true, DataSourceUpdateMode.Never));
             txbFoodName.DataBindings.Add(new Binding("Text", dgvFood.DataSource, "FoodName", true, DataSourceUpdateMode.Never));
             nudFoodPrice.DataBindings.Add(new Binding("Value", dgvFood.DataSource, "UnitPrice", true, DataSourceUpdateMode.Never));
-
         }
 
         void LoadDateTimePickerForBill()
@@ -146,12 +156,67 @@ namespace QuanLyQuanPho
                 MessageBox.Show("Xóa thông tin không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        
+
         void SearchFoodByName()
         {
             string foodName = txbSearchFood.Text;
             DataTable searchFoodData = FoodDAO.Instance.SearchFoodByName(foodName);
             foodList.DataSource = searchFoodData;
+        }
+
+        void AddNewCategory()
+        {
+            string categoryName = txbCategoryName.Text;
+            if (FoodCategoryDAO.Instance.AddNewCategory(categoryName))
+            {
+                MessageBox.Show("Thêm doanh mục thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadFoodCategory(cbxFoodCategory);
+                if (addCategory != null)
+                {
+                    addCategory(this, new EventArgs());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Thêm doanh mục không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        void EditCategory()
+        {
+            int categoryId = Int32.Parse(txbCategoryId.Text);
+            string categoryName = txbCategoryName.Text;
+            if (FoodCategoryDAO.Instance.EditCategory(categoryId, categoryName))
+            {
+                MessageBox.Show("Sửa doanh mục thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadFoodCategory(cbxFoodCategory);
+                if (updateCategory != null)
+                {
+                    updateCategory(this, new EventArgs());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Thêm doanh mục không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        void DeleteCategory()
+        {
+            int categoryId = Int32.Parse(txbCategoryId.Text);
+            if (FoodCategoryDAO.Instance.DeleteCategory(categoryId))
+            {
+                MessageBox.Show("Xóa doanh mục thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadFoodCategory(cbxFoodCategory);
+                if (xoaCategory != null)
+                {
+                    xoaCategory(this, new EventArgs());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Xóa doanh mục không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         #endregion
 
@@ -207,6 +272,39 @@ namespace QuanLyQuanPho
             SearchFoodByName();
         }
 
+        private void btnCategoryView_Click(object sender, EventArgs e)
+        {
+            LoadFoodCategory(cbxFoodCategory);
+        }
+
+        private void btnAddCategory_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thanh doanh mục này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult.Equals(DialogResult.Yes))
+            {
+                AddNewCategory();
+            }
+
+        }
+
+        private void btnEditCategory_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thanh doanh mục này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult.Equals(DialogResult.Yes))
+            {
+                EditCategory();
+            }
+        }
+
+        private void btnDeleteCategory_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thanh doanh mục này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult.Equals(DialogResult.Yes))
+            {
+                DeleteCategory();
+            }
+        }
+
         private event EventHandler insertFood;
         public event EventHandler InsertFood
         {
@@ -226,6 +324,27 @@ namespace QuanLyQuanPho
         {
             add { deleteFood += value; }
             remove { deleteFood -= value; }
+        }
+
+        private event EventHandler addCategory;
+        public event EventHandler AddCategory
+        {
+            add { addCategory += value; }
+            remove { addCategory -= value; }
+        }
+
+        private event EventHandler updateCategory;
+        public event EventHandler UpdateCategory
+        {
+            add { updateCategory += value; }
+            remove { UpdateCategory -= value; }
+        }
+
+        public event EventHandler xoaCategory;
+        public event EventHandler XoaCategory
+        {
+            add {  xoaCategory += value; }
+            remove { xoaCategory -= value; }
         }
         #endregion
     }

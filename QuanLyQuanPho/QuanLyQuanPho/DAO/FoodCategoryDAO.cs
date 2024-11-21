@@ -41,5 +41,34 @@ namespace QuanLyQuanPho.DAO
             return listFoodCategory;
         }
     
+        public DataTable GetFoodCategory()
+        {
+            string query = @"EXEC USP_GetListFoodCategory";
+            return DataProvider.Instance.ExcuteQuery(query);
+        }
+
+        public bool AddNewCategory(string categoryName)
+        {
+            string query = @"EXEC USP_AddNewFoodCategory @CategoryName ";
+            int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { categoryName });
+            return result > 0;
+        }
+
+        public bool EditCategory(int id, string categoryName)
+        {
+            string query = @"EXEC USP_EditFoodCategory @Id , @CategoryName ";
+            int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { id, categoryName });
+            return result > 0;
+        }
+
+        public bool DeleteCategory(int id) {
+            if(FoodDAO.Instance.DeleteFoodByCategoryId(id))
+            {
+                string query = @"EXEC USP_DeleteFoodCategoryById @Id ";
+                int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { id });
+                return result > 0;
+            }
+            return false;
+        }
     }
 }
