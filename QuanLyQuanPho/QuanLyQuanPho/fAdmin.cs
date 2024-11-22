@@ -18,6 +18,11 @@ namespace QuanLyQuanPho
         BindingSource categoryList = new BindingSource();
         BindingSource tableList = new BindingSource();
         BindingSource accountList = new BindingSource();
+
+        private Account account;
+
+        public Account Account { get => account; set => account = value; }
+
         public fAdmin()
         {
             InitializeComponent();
@@ -35,22 +40,8 @@ namespace QuanLyQuanPho
             AddFoodBinding();
             LoadTable();
             AddTableBinding();
-            LoadAccountType();
             LoadAccount();
             AddAccountBinding();
-        }
-
-        void LoadAccountType()
-        {
-            List<Account> accountList = new List<Account>();
-            DataTable data = AccountDAO.Instance.GetAccountList();
-            foreach (DataRow row in data.Rows)
-            {
-                Account account = new Account(row);
-                accountList.Add(account);
-            }
-            cbxAccountType.DataSource = accountList;
-            cbxAccountType.DisplayMember = "AccountType";
         }
 
         void LoadTable()
@@ -75,6 +66,7 @@ namespace QuanLyQuanPho
         {
             txbUsserName.DataBindings.Add(new Binding("Text", dgvAccount.DataSource, "UserName", true, DataSourceUpdateMode.Never));
             txbDisplayNameAccount.DataBindings.Add(new Binding("Text", dgvAccount.DataSource, "DisplayName", true, DataSourceUpdateMode.Never));
+            nudAccountType.DataBindings.Add(new Binding("Value", dgvAccount.DataSource, "AccountType", true, DataSourceUpdateMode.Never));
         }
 
         void LoadFoodCategory(ComboBox cbx)
@@ -263,19 +255,6 @@ namespace QuanLyQuanPho
             }
         }
 
-        void ChangeAccountStatusByUserName()
-        {
-            int accountType = (int)dgvAccount.SelectedCells[0].OwningRow.Cells["AccountType"].Value;
-            List<Account> accounts = cbxAccountType.DataSource as List<Account>;
-            foreach (Account account in accounts)
-            {
-                if (accountType == account.AccountType)
-                {
-                    cbxAccountType.SelectedItem = account;
-                }
-            }
-        }
-
         void AddNewTableByName()
         {
             string tableName = txbFoodTableName.Text;
@@ -312,7 +291,7 @@ namespace QuanLyQuanPho
             {
                 MessageBox.Show("Xóa thông tin bàn thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadTable();
-                if(deleteTable != null)
+                if (deleteTable != null)
                 {
                     deleteTable(this, new EventArgs());
                 }
@@ -320,6 +299,76 @@ namespace QuanLyQuanPho
             else
             {
                 MessageBox.Show("Xóa thông tin bàn không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void AddNewAccount()
+        {
+            string userName = txbUsserName.Text;
+            string displayName = txbDisplayNameAccount.Text;
+            int accountType = (int)nudAccountType.Value;
+
+            if (AccountDAO.Instance.AddNewAccount(userName, displayName, accountType))
+            {
+                MessageBox.Show("Thêm tài khoản thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadAccount();
+            }
+            else
+            {
+                MessageBox.Show("Thêm tài khoản không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        void UpdateAccount()
+        {
+            string userName = txbUsserName.Text;
+            string displayName = txbDisplayNameAccount.Text;
+            int accountType = (int)nudAccountType.Value;
+
+            if (AccountDAO.Instance.UpdateAccount(userName, displayName, accountType))
+            {
+                MessageBox.Show("Sửa thông tin thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadAccount();
+            }
+            else
+            {
+                MessageBox.Show("Sửa thông tin không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        void DeleteAccount()
+        {
+            string userName = txbUsserName.Text;
+
+            if (userName == Account.UserName)
+            {
+                MessageBox.Show("Bạn không thể xóa tài khoản của chính mình", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (AccountDAO.Instance.DeleteAccount(userName))
+            {
+                MessageBox.Show("Xóa thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadAccount();
+            }
+            else
+            {
+                MessageBox.Show("Xóa không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        void ResetPassword()
+        {
+            string userName = txbUsserName.Text;
+
+            if (AccountDAO.Instance.ResetPassword(userName))
+            {
+                MessageBox.Show("Đặt lại mật khẩu thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadAccount();
+            }
+            else
+            {
+                MessageBox.Show("Đặt lại mật khẩu không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -409,11 +458,6 @@ namespace QuanLyQuanPho
             }
         }
 
-        private void txbUsserName_TextChanged(object sender, EventArgs e)
-        {
-            ChangeAccountStatusByUserName();
-        }
-
         private void btnViewAccount_Click(object sender, EventArgs e)
         {
             LoadAccount();
@@ -460,6 +504,43 @@ namespace QuanLyQuanPho
                 {
                     deleteTable(this, new EventArgs());
                 }
+            }
+        }
+
+        private void btnAddAccount_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm tài khoản này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult.Equals(DialogResult.Yes))
+            {
+                AddNewAccount();
+            }
+
+        }
+
+        private void btnEditAccount_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn sửa thông tin tài khoản này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult.Equals(DialogResult.Yes))
+            {
+                UpdateAccount();
+            }
+        }
+
+        private void btnDeleteAccount_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn xóa tài khoản này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult.Equals(DialogResult.Yes))
+            {
+                DeleteAccount();
+            }
+        }
+
+        private void btnResetPassword_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn đặt lại mật khảu cho tài khoản này không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult.Equals(DialogResult.Yes))
+            {
+                ResetPassword();
             }
         }
 

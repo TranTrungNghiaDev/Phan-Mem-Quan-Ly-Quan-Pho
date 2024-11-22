@@ -679,4 +679,49 @@ BEGIN
 END
 GO
 
+-- Thêm tài khoản
+CREATE PROC USP_AddNewAccount
+@UserName NVARCHAR(100),
+@DisplayName NVARCHAR(100),
+@AccountType INT
+AS
+BEGIN
+	INSERT INTO dbo.Account (UserName, DisplayName, AccountType)
+	VALUES (@UserName, @DisplayName, @AccountType)
+END
+GO
+
+-- Sửa thông tin tài khoản
+CREATE PROC USP_UpdateAccount
+	@UserName NVARCHAR(100),
+	@DisplayName NVARCHAR(100),
+	@AccountType INT
+AS
+BEGIN
+	UPDATE dbo.Account
+	SET DisplayName = @DisplayName, AccountType = @AccountType
+	WHERE UserName = @UserName
+END
+GO
+
+-- Xóa tài khoản
+CREATE PROC USP_DeleteAccount
+	@UserName NVARCHAR(100)
+AS
+BEGIN
+	DELETE FROM dbo.Account
+	WHERE UserName = @UserName
+END
+GO
+
+-- Reset Password
+CREATE PROC USP_ResetPassword
+	@UserName NVARCHAR(100)
+AS
+BEGIN
+	UPDATE dbo.Account
+	SET UserPassword = 0
+	WHERE UserName = @UserName
+END
+GO
 

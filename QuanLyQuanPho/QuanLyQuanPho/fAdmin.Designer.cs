@@ -99,7 +99,7 @@
             txbDisplayNameAccount = new TextBox();
             label11 = new Label();
             panel27 = new Panel();
-            cbxAccountType = new ComboBox();
+            nudAccountType = new NumericUpDown();
             label12 = new Label();
             panel28 = new Panel();
             txbUsserName = new TextBox();
@@ -141,6 +141,7 @@
             panel24.SuspendLayout();
             panel26.SuspendLayout();
             panel27.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)nudAccountType).BeginInit();
             panel28.SuspendLayout();
             panel29.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvAccount).BeginInit();
@@ -742,6 +743,7 @@
             btnEditAccount.TabIndex = 2;
             btnEditAccount.Text = "Sửa";
             btnEditAccount.UseVisualStyleBackColor = true;
+            btnEditAccount.Click += btnEditAccount_Click;
             // 
             // btnDeleteAccount
             // 
@@ -751,6 +753,7 @@
             btnDeleteAccount.TabIndex = 1;
             btnDeleteAccount.Text = "Xóa";
             btnDeleteAccount.UseVisualStyleBackColor = true;
+            btnDeleteAccount.Click += btnDeleteAccount_Click;
             // 
             // btnAddAccount
             // 
@@ -760,6 +763,7 @@
             btnAddAccount.TabIndex = 0;
             btnAddAccount.Text = "Thêm";
             btnAddAccount.UseVisualStyleBackColor = true;
+            btnAddAccount.Click += btnAddAccount_Click;
             // 
             // panel24
             // 
@@ -780,6 +784,7 @@
             btnResetPassword.TabIndex = 4;
             btnResetPassword.Text = "Đặt lại mật khẩu";
             btnResetPassword.UseVisualStyleBackColor = true;
+            btnResetPassword.Click += btnResetPassword_Click;
             // 
             // panel26
             // 
@@ -809,20 +814,21 @@
             // 
             // panel27
             // 
-            panel27.Controls.Add(cbxAccountType);
+            panel27.Controls.Add(nudAccountType);
             panel27.Controls.Add(label12);
             panel27.Location = new Point(3, 87);
             panel27.Name = "panel27";
             panel27.Size = new Size(362, 36);
             panel27.TabIndex = 3;
             // 
-            // cbxAccountType
+            // nudAccountType
             // 
-            cbxAccountType.FormattingEnabled = true;
-            cbxAccountType.Location = new Point(144, 7);
-            cbxAccountType.Name = "cbxAccountType";
-            cbxAccountType.Size = new Size(215, 23);
-            cbxAccountType.TabIndex = 1;
+            nudAccountType.Location = new Point(146, 3);
+            nudAccountType.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
+            nudAccountType.Name = "nudAccountType";
+            nudAccountType.Size = new Size(39, 23);
+            nudAccountType.TabIndex = 1;
+            nudAccountType.TextAlign = HorizontalAlignment.Center;
             // 
             // label12
             // 
@@ -847,10 +853,8 @@
             // 
             txbUsserName.Location = new Point(144, 7);
             txbUsserName.Name = "txbUsserName";
-            txbUsserName.ReadOnly = true;
             txbUsserName.Size = new Size(215, 23);
             txbUsserName.TabIndex = 1;
-            txbUsserName.TextChanged += txbUsserName_TextChanged;
             // 
             // label13
             // 
@@ -932,6 +936,7 @@
             panel26.PerformLayout();
             panel27.ResumeLayout(false);
             panel27.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)nudAccountType).EndInit();
             panel28.ResumeLayout(false);
             panel28.PerformLayout();
             panel29.ResumeLayout(false);
@@ -1007,7 +1012,7 @@
         private Button btnAddAccount;
         private Panel panel24;
         private Panel panel25;
-        private NumericUpDown numericUpDown1;
+        private NumericUpDown nudAccountType;
         private Label label10;
         private Panel panel26;
         private TextBox textBox2;
@@ -1022,7 +1027,6 @@
         private DataGridView dgvAccount;
         private Button btnResetPassword;
         private TextBox txbDisplayNameAccount;
-        private ComboBox cbxAccountType;
         private Button btnEditFoodTable;
     }
 }

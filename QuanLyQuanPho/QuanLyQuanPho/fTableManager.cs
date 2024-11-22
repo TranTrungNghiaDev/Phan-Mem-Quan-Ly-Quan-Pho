@@ -148,6 +148,8 @@ namespace QuanLyQuanPho
         private void adminToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fAdmin fAdmin = new fAdmin();
+            fAdmin.Account = account;
+
             fAdmin.InsertFood += FAdmin_InsertFood;
             fAdmin.UpdateFood += FAdmin_UpdateFood;
             fAdmin.DeleteFood += FAdmin_DeleteFood;

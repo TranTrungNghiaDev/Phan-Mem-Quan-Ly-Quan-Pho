@@ -56,6 +56,32 @@ namespace QuanLyQuanPho.DAO
             return DataProvider.Instance.ExcuteQuery(query);
         }
 
+        public bool AddNewAccount(string userName, string displayName, int accountType)
+        {
+            string query = @"EXEC USP_AddNewAccount @UserName , @DisplayName , @AccountType ";
+            int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { userName, displayName, accountType });
+            return result > 0;
+        }
 
+        public bool UpdateAccount(string userName, string displayName, int accountType)
+        {
+            string query = @"EXEC USP_UpdateAccount @UserName , @DisplayName , @AccountType ";
+            int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { userName, displayName, accountType });
+            return result > 0;
+        }
+
+        public bool DeleteAccount(string userName)
+        {
+            string query = @"EXEC USP_DeleteAccount @UserName ";
+            int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { userName });
+            return result > 0;
+        }
+
+        public bool ResetPassword(string userName)
+        {
+            string query = @"EXEC USP_ResetPassword @UserName ";
+            int result = DataProvider.Instance.ExcuteNonQuery(query, new object[] { userName });
+            return result > 0;
+        }
     }
 }
