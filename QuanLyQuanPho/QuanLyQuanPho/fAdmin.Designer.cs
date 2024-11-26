@@ -35,6 +35,11 @@
             dtpEndDate = new DateTimePicker();
             dtpFromDate = new DateTimePicker();
             panel1 = new Panel();
+            txbPageBill = new TextBox();
+            btnNextPageBill = new Button();
+            btnLastPageBill = new Button();
+            btnPreviousPageBill = new Button();
+            btnfirstPageBill = new Button();
             dgvBill = new DataGridView();
             tpFood = new TabPage();
             panel6 = new Panel();
@@ -208,11 +213,68 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(txbPageBill);
+            panel1.Controls.Add(btnNextPageBill);
+            panel1.Controls.Add(btnLastPageBill);
+            panel1.Controls.Add(btnPreviousPageBill);
+            panel1.Controls.Add(btnfirstPageBill);
             panel1.Controls.Add(dgvBill);
             panel1.Location = new Point(6, 43);
             panel1.Name = "panel1";
             panel1.Size = new Size(756, 349);
             panel1.TabIndex = 0;
+            // 
+            // txbPageBill
+            // 
+            txbPageBill.Location = new Point(324, 323);
+            txbPageBill.Name = "txbPageBill";
+            txbPageBill.ReadOnly = true;
+            txbPageBill.ShortcutsEnabled = false;
+            txbPageBill.Size = new Size(100, 23);
+            txbPageBill.TabIndex = 5;
+            txbPageBill.Text = "1";
+            txbPageBill.TextAlign = HorizontalAlignment.Center;
+            txbPageBill.TextChanged += txbPageBill_TextChanged;
+            // 
+            // btnNextPageBill
+            // 
+            btnNextPageBill.Location = new Point(553, 323);
+            btnNextPageBill.Name = "btnNextPageBill";
+            btnNextPageBill.Size = new Size(75, 23);
+            btnNextPageBill.TabIndex = 4;
+            btnNextPageBill.Text = "Next";
+            btnNextPageBill.UseVisualStyleBackColor = true;
+            btnNextPageBill.Click += btnNextPageBill_Click;
+            // 
+            // btnLastPageBill
+            // 
+            btnLastPageBill.Location = new Point(678, 323);
+            btnLastPageBill.Name = "btnLastPageBill";
+            btnLastPageBill.Size = new Size(75, 23);
+            btnLastPageBill.TabIndex = 3;
+            btnLastPageBill.Text = "Last";
+            btnLastPageBill.UseVisualStyleBackColor = true;
+            btnLastPageBill.Click += btnLastPageBill_Click;
+            // 
+            // btnPreviousPageBill
+            // 
+            btnPreviousPageBill.Location = new Point(144, 323);
+            btnPreviousPageBill.Name = "btnPreviousPageBill";
+            btnPreviousPageBill.Size = new Size(75, 23);
+            btnPreviousPageBill.TabIndex = 2;
+            btnPreviousPageBill.Text = "Prev";
+            btnPreviousPageBill.UseVisualStyleBackColor = true;
+            btnPreviousPageBill.Click += btnPreviousPageBill_Click;
+            // 
+            // btnfirstPageBill
+            // 
+            btnfirstPageBill.Location = new Point(3, 323);
+            btnfirstPageBill.Name = "btnfirstPageBill";
+            btnfirstPageBill.Size = new Size(75, 23);
+            btnfirstPageBill.TabIndex = 1;
+            btnfirstPageBill.Text = "First";
+            btnfirstPageBill.UseVisualStyleBackColor = true;
+            btnfirstPageBill.Click += btnfirstPageBill_Click;
             // 
             // dgvBill
             // 
@@ -221,7 +283,7 @@
             dgvBill.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvBill.Location = new Point(-1, 0);
             dgvBill.Name = "dgvBill";
-            dgvBill.Size = new Size(754, 346);
+            dgvBill.Size = new Size(754, 317);
             dgvBill.TabIndex = 0;
             // 
             // tpFood
@@ -894,6 +956,7 @@
             tpBill.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvBill).EndInit();
             tpFood.ResumeLayout(false);
             panel6.ResumeLayout(false);
@@ -1028,5 +1091,10 @@
         private Button btnResetPassword;
         private TextBox txbDisplayNameAccount;
         private Button btnEditFoodTable;
+        private TextBox txbPageBill;
+        private Button btnNextPageBill;
+        private Button btnLastPageBill;
+        private Button btnPreviousPageBill;
+        private Button btnfirstPageBill;
     }
 }

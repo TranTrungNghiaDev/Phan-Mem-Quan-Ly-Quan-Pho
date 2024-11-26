@@ -33,7 +33,7 @@ namespace QuanLyQuanPho
         void Load()
         {
             LoadDateTimePickerForBill();
-            LoadCheckBillByDate();
+            LoadCheckBillByDateAndPage();
             LoadFoodCategory(cbxFoodCategory);
             AddCategoryBinding();
             LoadFoodList();
@@ -103,6 +103,14 @@ namespace QuanLyQuanPho
             DateTime fromDate = dtpFromDate.Value;
             DateTime endDate = dtpEndDate.Value;
             dgvBill.DataSource = BillDAO.Instance.GetCheckBillByDate(fromDate, endDate);
+        }
+
+        void LoadCheckBillByDateAndPage()
+        {
+            DateTime fromDate = dtpFromDate.Value;
+            DateTime endDate = dtpEndDate.Value;
+            int page = Int32.Parse(txbPageBill.Text);
+            dgvBill.DataSource = BillDAO.Instance.GetCheckBillByDateAndPage(fromDate, endDate, page);
         }
 
         void LoadFoodList()
@@ -371,6 +379,22 @@ namespace QuanLyQuanPho
                 MessageBox.Show("Đặt lại mật khẩu không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        int GetTotalPages()
+        {
+            DateTime fromDate = dtpFromDate.Value;
+            DateTime endDate = dtpEndDate.Value;
+            int totalBills = BillDAO.Instance.GetTotalCheckBillByDate(fromDate, endDate);
+            int totalPages = totalBills / 10;
+
+            if (totalBills % 10 > 0)
+            {
+                totalPages++;
+                return totalPages;
+            }
+
+            return totalPages;
+        }
         #endregion
 
         #region Events
@@ -542,6 +566,44 @@ namespace QuanLyQuanPho
             {
                 ResetPassword();
             }
+        }
+
+        private void txbPageBill_TextChanged(object sender, EventArgs e)
+        {
+            LoadCheckBillByDateAndPage();
+        }
+
+        private void btnfirstPageBill_Click(object sender, EventArgs e)
+        {
+            txbPageBill.Text = "1";
+        }
+
+        private void btnPreviousPageBill_Click(object sender, EventArgs e)
+        {
+            int currentPage = Int32.Parse(txbPageBill.Text);
+            if (currentPage > 1)
+            {
+                currentPage--;
+                txbPageBill.Text = currentPage.ToString();
+            }
+        }
+
+        private void btnNextPageBill_Click(object sender, EventArgs e)
+        {
+            int currentPage = Int32.Parse(txbPageBill.Text);
+            int totalPages = GetTotalPages();
+
+            if (currentPage < totalPages)
+            {
+                currentPage++;
+                txbPageBill.Text = currentPage.ToString();
+            }
+        }
+
+        private void btnLastPageBill_Click(object sender, EventArgs e)
+        {
+            int totalPages = GetTotalPages();
+            txbPageBill.Text = totalPages.ToString();
         }
 
         private event EventHandler insertFood;

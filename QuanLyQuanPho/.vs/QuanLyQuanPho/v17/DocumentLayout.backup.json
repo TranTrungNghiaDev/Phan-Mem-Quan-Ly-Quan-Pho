@@ -7,24 +7,12 @@
       "RelativeMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|solutionrelative:quanlyquanpho\\fadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\quanlyquanpho\\fadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|d:\\hoc tap\\phan-mem-quan-ly-quan-pho\\quanlyquanpho\\quanlyquanpho\\fadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|solutionrelative:quanlyquanpho\\fadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|d:\\hoc tap\\phan-mem-quan-ly-quan-pho\\quanlyquanpho\\quanlyquanpho\\dao\\foodtabledao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|solutionrelative:quanlyquanpho\\dao\\foodtabledao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|d:\\hoc tap\\phan-mem-quan-ly-quan-pho\\quanlyquanpho\\quanlyquanpho\\dao\\accountdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|solutionrelative:quanlyquanpho\\dao\\accountdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|d:\\hoc tap\\phan-mem-quan-ly-quan-pho\\quanlyquanpho\\quanlyquanpho\\ftablemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|solutionrelative:quanlyquanpho\\ftablemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|d:\\hoc tap\\phan-mem-quan-ly-quan-pho\\quanlyquanpho\\quanlyquanpho\\fadmin.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|solutionrelative:quanlyquanpho\\fadmin.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|d:\\hoc tap\\phan-mem-quan-ly-quan-pho\\quanlyquanpho\\quanlyquanpho\\dao\\billdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D54F1669-EB1D-4506-85DC-4127B87520F5}|QuanLyQuanPho\\QuanLyQuanPho.csproj|solutionrelative:quanlyquanpho\\dao\\billdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,8 +22,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BillDAO.cs",
+              "DocumentMoniker": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\DAO\\BillDAO.cs",
+              "RelativeDocumentMoniker": "QuanLyQuanPho\\DAO\\BillDAO.cs",
+              "ToolTip": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\DAO\\BillDAO.cs",
+              "RelativeToolTip": "QuanLyQuanPho\\DAO\\BillDAO.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAgwFkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T05:27:46.78Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -44,36 +45,9 @@
               "RelativeDocumentMoniker": "QuanLyQuanPho\\fAdmin.cs",
               "ToolTip": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\fAdmin.cs",
               "RelativeToolTip": "QuanLyQuanPho\\fAdmin.cs",
-              "ViewState": "AgIAAGoBAAAAAAAAAAAowHIBAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAFICAAAAAAAAAAA5wF0CAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T04:20:24.276Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "fAdmin.Designer.cs",
-              "DocumentMoniker": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\fAdmin.Designer.cs",
-              "RelativeDocumentMoniker": "QuanLyQuanPho\\fAdmin.Designer.cs",
-              "ToolTip": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\fAdmin.Designer.cs",
-              "RelativeToolTip": "QuanLyQuanPho\\fAdmin.Designer.cs",
-              "ViewState": "AgIAAFEDAAAAAAAAAIA6wFgDAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-22T01:54:20.949Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "FoodTableDAO.cs",
-              "DocumentMoniker": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\DAO\\FoodTableDAO.cs",
-              "RelativeDocumentMoniker": "QuanLyQuanPho\\DAO\\FoodTableDAO.cs",
-              "ToolTip": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\DAO\\FoodTableDAO.cs",
-              "RelativeToolTip": "QuanLyQuanPho\\DAO\\FoodTableDAO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEUAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T06:19:47.725Z",
+              "WhenOpened": "2024-11-26T05:27:38.132Z",
               "EditorCaption": ""
             },
             {
@@ -85,33 +59,8 @@
               "ToolTip": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\fAdmin.cs [Design]",
               "RelativeToolTip": "QuanLyQuanPho\\fAdmin.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T05:00:11.283Z",
+              "WhenOpened": "2024-11-26T05:27:24.663Z",
               "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "fTableManager.cs",
-              "DocumentMoniker": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\fTableManager.cs",
-              "RelativeDocumentMoniker": "QuanLyQuanPho\\fTableManager.cs",
-              "ToolTip": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\fTableManager.cs",
-              "RelativeToolTip": "QuanLyQuanPho\\fTableManager.cs",
-              "ViewState": "AgIAAJMAAAAAAAAAAAAAAJYAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T04:38:12.797Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AccountDAO.cs",
-              "DocumentMoniker": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\DAO\\AccountDAO.cs",
-              "RelativeDocumentMoniker": "QuanLyQuanPho\\DAO\\AccountDAO.cs",
-              "ToolTip": "D:\\Hoc Tap\\Phan-Mem-Quan-Ly-Quan-Pho\\QuanLyQuanPho\\QuanLyQuanPho\\DAO\\AccountDAO.cs",
-              "RelativeToolTip": "QuanLyQuanPho\\DAO\\AccountDAO.cs",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAAAFEAAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T04:23:56.72Z",
-              "EditorCaption": ""
             }
           ]
         }

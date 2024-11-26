@@ -725,3 +725,52 @@ BEGIN
 END
 GO
 
+-- Hiển thị danh sách Bill đã thanh toán
+-- Theo trang
+CREATE PROC USP_GetCheckBillByDateAndPage
+@dateCheckIn DATE,
+@dateCheckOut DATE,
+@page INT
+AS
+BEGIN
+	DECLARE @rows INT = 10;
+	DECLARE @selectedRows INT = @rows;
+	DECLARE @exceptRows INT = (@page - 1) *@rows;
+
+	WITH ListBillTable AS
+	(
+		SELECT b.Id,
+		ft.TableName [Tên bàn], 
+		b.DateCheckIn AS [Ngày vào], 
+		b.DateCheckOut AS [Ngày ra], 
+		b.Discount AS [Giảm giá],
+		b.[Total Price] AS [Tổng tiền]
+		FROM dbo.Bill as b, dbo.FoodTable as ft
+		WHERE BillStatus = 1 AND b.FoodTableId = ft. Id
+		AND DateCheckIn >= @dateCheckIn
+		AND DateCheckOut <= @dateCheckOut
+	)
+
+	SELECT TOP (@selectedRows) *
+	FROM ListBillTable
+	WHERE Id NOT IN(
+	SELECT TOP (@exceptRows) Id
+	FROM ListBillTable)
+END
+GO
+
+-- Đếm số hóa đơn đã thanh toán dựa theo ngày vào và ngày ra
+-- Hiển thị danh sách Bill đã thanh toán
+CREATE PROC USP_GetTotalCheckBillByDate
+@dateCheckIn DATE,
+@dateCheckOut DATE
+AS
+BEGIN
+	SELECT COUNT(*)
+	FROM dbo.Bill as b, dbo.FoodTable as ft
+	WHERE BillStatus = 1 AND b.FoodTableId = ft. Id
+	AND DateCheckIn >= @dateCheckIn
+	AND DateCheckOut <= @dateCheckOut
+END
+GO
+

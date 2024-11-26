@@ -1,10 +1,5 @@
 ﻿using QuanLyQuanPho.DTO;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuanLyQuanPho.DAO
 {
@@ -45,7 +40,7 @@ namespace QuanLyQuanPho.DAO
         public void CreateBillByTableId(int tableId)
         {
             string query = @"EXEC USP_CreateUncheckBillByTableID @TableID ";
-            DataProvider.Instance.ExcuteNonQuery(query, new object[] {tableId});
+            DataProvider.Instance.ExcuteNonQuery(query, new object[] { tableId });
         }
 
         public int GetLastestBillId()
@@ -57,11 +52,11 @@ namespace QuanLyQuanPho.DAO
         public void CheckOut(int uncheckBillID, int discount, int totalPrice)
         {
             string query = @"EXEC USP_CheckOutBillByBillID @BillID , @Discount , @TotalPrice";
-            DataProvider.Instance.ExcuteNonQuery(query, new object[] {uncheckBillID, discount, totalPrice});
+            DataProvider.Instance.ExcuteNonQuery(query, new object[] { uncheckBillID, discount, totalPrice });
         }
-    
-        public void SwitchBillByTableID(int firstTableID , int secondTableID)
-        {  
+
+        public void SwitchBillByTableID(int firstTableID, int secondTableID)
+        {
             string query = @"EXEC USP_SwitchBillByTableId @firstTableID , @secondTableID ";
             DataProvider.Instance.ExcuteNonQuery(query, new object[] { firstTableID, secondTableID });
         }
@@ -71,11 +66,24 @@ namespace QuanLyQuanPho.DAO
             string query = @"EXEC USP_MergeBillByTableId @firstTableID , @secondTableID ";
             DataProvider.Instance.ExcuteNonQuery(query, new object[] { firstTableID, secondTableID });
         }
-    
+
         public DataTable GetCheckBillByDate(DateTime fromDate, DateTime endDate)
         {
             string query = @"EXEC USP_GetCheckBillByDate @fromDate , @endDate";
-            return DataProvider.Instance.ExcuteQuery(query, new object[] {fromDate, endDate});
+            return DataProvider.Instance.ExcuteQuery(query, new object[] { fromDate, endDate });
         }
+
+        public DataTable GetCheckBillByDateAndPage(DateTime fromDate, DateTime endDate, int page)
+        {
+            string query = @"EXEC USP_GetCheckBillByDateAndPage @fromDate , @endDate , @page";
+            return DataProvider.Instance.ExcuteQuery(query, new object[] { fromDate, endDate, page });
+        }
+
+        public int GetTotalCheckBillByDate(DateTime fromDate, DateTime endDate)
+        {
+            string query = @"EXEC USP_GetTotalCheckBillByDate @dateCheckIn , @dateCheckOut ";
+            return (int)DataProvider.Instance.ExcuteScalar(query, new object[] { fromDate, endDate });
+        }
+
     }
 }
